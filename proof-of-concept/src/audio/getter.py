@@ -1,7 +1,8 @@
-from scipy.io.wavfile import read
+from soundfile import read
+from importlib.resources import open_binary
 
-def from_file(path: str):
-    return read(path)
+def from_file(obj):
+    return read(obj)
 
 def test_audio():
-    return from_file("../../test/test_data/test_audio.wav")
+    return *from_file(open_binary("src.static_data", "test_audio.wav")), 2

@@ -1,4 +1,5 @@
+# Just run : pip install -r requirements.txt
 
 numpy
 matplotlib # for debugging
-scipy
+soundfile

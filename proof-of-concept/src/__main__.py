@@ -8,26 +8,18 @@ from matplotlib import pyplot as plt
 import numpy as np
 from . import audio
 
-sample_rate, data = audio.test_audio()
+file_info = audio.test_audio()
+fourier = formule.fourier_transform(*file_info)
 
-# speed-up fft
-channel_1 = np.zeros([2**(int(np.ceil(np.log2(len(data))))), 1])
-channel_1[0:len(data)] = data
-fourier = np.fft.fft(channel_1)
 
 # plot
-
-fourier = np.fft.fft(channel_1)
-
-w = np.linspace(0, 44000, len(fourier))
+w = np.linspace(0, file_info[1], len(fourier)//2)
 
 # First half is the real component, second half is imaginary
 fourier_to_plot = fourier[0:len(fourier)//2]
-w = w[0:len(fourier)//2]
 
 plt.figure(1)
-
-plt.plot(w, fourier_to_plot)
+plt.plot(w, np.abs(fourier_to_plot))
 plt.xlabel('frequency')
 plt.ylabel('amplitude')
 plt.show()
