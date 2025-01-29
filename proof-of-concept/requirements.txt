@@ -1,5 +1,6 @@
 # Just run : pip install -r requirements.txt
 
-numpy
-matplotlib # for debugging
-soundfile
+numpy       # processing
+matplotlib  # for debugging
+soundfile   # open audio file
+flet        # GUI

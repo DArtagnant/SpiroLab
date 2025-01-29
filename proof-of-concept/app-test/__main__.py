@@ -7,6 +7,7 @@ from . import formule
 from matplotlib import pyplot as plt
 import numpy as np
 from . import audio
+from . import gui
 
 file_info = audio.test_audio()
 fourier = formule.fourier_transform(*file_info)
@@ -23,3 +24,5 @@ plt.plot(w, np.abs(fourier_to_plot))
 plt.xlabel('frequency')
 plt.ylabel('amplitude')
 plt.show()
+
+gui.run_test()
