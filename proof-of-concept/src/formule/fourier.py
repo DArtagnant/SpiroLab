@@ -1,7 +1,7 @@
 from scipy.fft import fft, fftfreq
 
 
-def fourier_transform():
+def fourier_transform(channel):
     from scipy.fft import fft, fftfreq
     import numpy as np
     # Number of sample points
@@ -16,5 +16,3 @@ def fourier_transform():
     plt.plot(xf, 2.0/N * np.abs(yf[0:N//2]))
     plt.grid()
     plt.show()
-
-fourier_transform()

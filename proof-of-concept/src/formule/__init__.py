@@ -1,1 +1,1 @@
-from fourier import fourier_transform
+from .fourier import fourier_transform
