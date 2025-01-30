@@ -16,7 +16,7 @@ fourier = formule.fourier_transform(*file_info)
 # plot
 w = np.linspace(0, file_info[1], len(fourier)//2)
 
-# First half is the real component, second half is imaginary
+# First half is the real component, second half is imaginary ┑(￣Д ￣)┍
 fourier_to_plot = fourier[0:len(fourier)//2]
 
 plt.figure(1)
