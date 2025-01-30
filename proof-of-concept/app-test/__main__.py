@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-if not __package__ == "src":
-    raise ImportError("Le code doit être appelé en tant que module : `python -m src`")
+if not __package__ == "app-test":
+    raise ImportError("Le code doit être appelé en tant que module : `python -m app-test`")
 
 from . import formule
 from matplotlib import pyplot as plt

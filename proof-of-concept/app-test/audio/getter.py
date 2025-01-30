@@ -5,4 +5,4 @@ def from_file(obj):
     return read(obj)
 
 def test_audio():
-    return *from_file(open_binary("src.static_data", "test_audio.wav")), 2
+    return *from_file(open_binary("app-test.static_data", "test_audio.wav")), 2
