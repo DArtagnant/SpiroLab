@@ -3,7 +3,7 @@ from flet import canvas as cv
 from .math import point_position_from_angles
 
 def spirograph(
-    circle: (float, float),
+    circle: tuple[float, float],
     large_radius: float, 
     small_radius: float, 
     large_angular_velocity: float,
