@@ -1,16 +1,14 @@
 import flet as ft
 from flet import canvas as cv
 
-from .math import cartesian_to_screen_coords
-from .state_provider import auto_updated_canvas
+from .state_provider import centered_canvas
 
 def main(page: ft.Page):
     page.title = "Proof of Concept"
 
     # TODO
-    cp = auto_updated_canvas()
-
-    # [cv.Circle(*cartesian_to_screen_coords(0,0,page.width,page.height), 60)]
+    cp = centered_canvas(page)
+    cp.append(cv.Circle(0, 0, 20, ft.Paint(ft.Colors.GREEN)))
 
     page.add(
         ft.Container(
@@ -20,8 +18,6 @@ def main(page: ft.Page):
             expand=True,
         )
     )
-
-    # cp.on_resized = lambda _: cp.update()
 
 def render():
     ft.app(main)
