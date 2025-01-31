@@ -2,7 +2,7 @@ from math import sin, cos
 
 # A priori, le centre du grand cercle est en 0,0 (cartésien)
 def point_position_from_angles(
-    center: (float, float),
+    center: tuple[float, float],
     large_radius: float, 
     small_radius: float,
     circle_angle: float,
