@@ -6,7 +6,6 @@ from .state_provider import centered_canvas
 def main(page: ft.Page):
     page.title = "Proof of Concept"
 
-    # TODO
     cp = centered_canvas(page)
     cp.append(cv.Circle(0, 0, 20, ft.Paint(ft.Colors.GREEN)))
 
