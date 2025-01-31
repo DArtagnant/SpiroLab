@@ -4,8 +4,8 @@ if not __package__ == "app-test":
     raise ImportError("Le code doit être appelé en tant que module : `python -m app-test`")
 
 from . import formule
-from matplotlib import pyplot as                                                                                                                        plt
-import numpy as                                                                                                                                                                                         np
+from matplotlib import pyplot as plt
+import numpy as np
 from . import audio
 from . import gui
 
