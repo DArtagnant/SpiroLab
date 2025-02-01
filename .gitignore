@@ -173,3 +173,4 @@ cython_debug/
 # Custom
 storage/
 NSI-env/
+build/
