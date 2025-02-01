@@ -20,7 +20,7 @@ def spirograph(
     )
 
     for _ in range(NPOINTS):
-        yield cv.Circle(*point, 2, ft.Paint(random_color()))
+        #yield cv.Circle(*point, 2, ft.Paint(random_color()))
 
         new_circle_angle = circle_angle + large_angular_velocity
         new_point_angle = point_angle + small_angular_velocity
@@ -29,9 +29,7 @@ def spirograph(
             center, large_radius, small_radius, new_circle_angle, new_point_angle
         )
 
-        # A Rétablir quand le resizing sera fix
-        # 
-        # yield cv.Line(*point, *new_point, ft.Paint(ft.Colors.GREEN))
+        yield cv.Line(*point, *new_point, ft.Paint(ft.Colors.LIGHT_BLUE_900))
 
         point, circle_angle, point_angle = new_point, new_circle_angle, new_point_angle
 
@@ -43,11 +41,11 @@ def render_spirograph(
     large_angular_velocity: float,
     small_angular_velocity: float,
 ):
-    for point in spirograph(
+    for line in spirograph(
         center,
         large_radius,
         small_radius,
         large_angular_velocity,
         small_angular_velocity
     ):
-        canvas.append(point)
+        canvas.append(line)
