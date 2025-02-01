@@ -13,6 +13,13 @@ def centered_canvas(page: ft.Page):
 def _append(canvas, shape):
     shape.x += canvas.state_current_width / 2
     shape.y = -shape.y + canvas.state_current_height / 2
+    
+    # Essai d'adaptation pour les lignes; FIXME
+    # shape.x1 += canvas.state_current_width / 2
+    # shape.x2 += canvas.state_current_width / 2
+    # shape.y1 = -shape.y1 + canvas.state_current_height / 2
+    # shape.y2 = -shape.y2 + canvas.state_current_height / 2
+
     canvas.shapes.append(shape)
 
 def _generate_auto_resize(canvas: cv.Canvas):

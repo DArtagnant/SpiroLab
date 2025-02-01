@@ -2,7 +2,7 @@ import flet as ft
 from flet import canvas as cv
 from .math import point_position_from_angles
 
-NPOINTS = 1000 # Constante de test
+NPOINTS = 2000 # Constante de test
 
 def spirograph(
     center: tuple[float, float],
@@ -20,14 +20,18 @@ def spirograph(
     )
 
     for _ in range(NPOINTS):
+        yield cv.Circle(*point, 1, ft.Paint(ft.Colors.GREEN))
+
         new_circle_angle = circle_angle + large_angular_velocity
         new_point_angle = point_angle + small_angular_velocity
 
         new_point = point_position_from_angles(
-        center, large_radius, small_radius, new_circle_angle, new_point_angle
+            center, large_radius, small_radius, new_circle_angle, new_point_angle
         )
 
-        yield cv.Line(*point, *new_point, ft.Paint(ft.Colors.WHITE))
+        # A Rétablir quand le resizing sera fix
+        # 
+        # yield cv.Line(*point, *new_point, ft.Paint(ft.Colors.GREEN))
 
         point, circle_angle, point_angle = new_point, new_circle_angle, new_point_angle
 
@@ -39,11 +43,11 @@ def render_spirograph(
     large_angular_velocity: float,
     small_angular_velocity: float,
 ):
-    for segment in spirograph(
+    for point in spirograph(
         center,
         large_radius,
         small_radius,
         large_angular_velocity,
         small_angular_velocity
     ):
-        canvas.append(segment)
+        canvas.append(point)

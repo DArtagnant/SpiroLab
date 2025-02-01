@@ -21,10 +21,10 @@ def main(page: ft.Page):
     render_spirograph(
         cp,
         (0,0),
-        60,
-        20,
+        100,
+        70,
         0.1,
-        0.2
+        0.5
     )
 
 def render():
