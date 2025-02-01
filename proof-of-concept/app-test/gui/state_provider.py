@@ -12,9 +12,15 @@ def centered_canvas(page: ft.Page):
 
 def _append(canvas, shape):
     if isinstance(shape, cv.Circle):
+        shape.state_absolute_x = shape.x
+        shape.state_absolute_y = shape.y
         shape.x += canvas.state_current_width / 2
         shape.y = -shape.y + canvas.state_current_height / 2
     elif isinstance(shape, cv.Line):
+        shape.state_absolute_x1 = shape.x1
+        shape.state_absolute_y1 = shape.y1
+        shape.state_absolute_x2 = shape.x2
+        shape.state_absolute_y2 = shape.y2
         shape.x1 += canvas.state_current_width / 2
         shape.y1 = -shape.y1 + canvas.state_current_height / 2
         shape.x2 += canvas.state_current_width / 2
@@ -29,16 +35,14 @@ def _generate_auto_resize(canvas: cv.Canvas):
 
     def auto_resize(event):
         for shape in canvas.shapes:
-            patch_x = (-canvas.state_current_width + event.width) / 2
-            patch_y = (-canvas.state_current_height + event.height) / 2
             if isinstance(shape, cv.Circle):
-                shape.x += patch_x
-                shape.y += patch_y
+                shape.x = shape.state_absolute_x + event.width / 2
+                shape.y = -shape.state_absolute_y + event.height / 2
             elif isinstance(shape, cv.Line):
-                shape.x1 += patch_x
-                shape.y1 += patch_y
-                shape.x2 += patch_x
-                shape.y2 += patch_y
+                shape.x1 = shape.state_absolute_x1 + event.width / 2
+                shape.y1 = -shape.state_absolute_y1 + event.height / 2
+                shape.x2 = shape.state_absolute_x2 + event.width / 2
+                shape.y2 = -shape.state_absolute_y2 + event.height / 2
 
         canvas.state_current_width = event.width
         canvas.state_current_height = event.height
