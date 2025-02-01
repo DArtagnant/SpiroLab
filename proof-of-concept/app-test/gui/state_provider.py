@@ -31,10 +31,20 @@ def _append(canvas, shape):
 
     canvas.shapes.append(shape)
 
+import time
+
 def _generate_auto_resize(canvas: cv.Canvas):
+    target_size = None
 
     def auto_resize(event):
+        nonlocal target_size
+        my_target = (event.width, event.height)
+        target_size = my_target
         for shape in canvas.shapes:
+            if target_size != my_target:
+                # Cela veut dire qu'un resize plus recent a été demandé
+                # Ce code n'a plus de raison de s'executer
+                return None
             if isinstance(shape, cv.Circle):
                 shape.x = shape.state_absolute_x + event.width / 2
                 shape.y = -shape.state_absolute_y + event.height / 2
