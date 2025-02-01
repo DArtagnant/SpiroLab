@@ -31,9 +31,9 @@ def _append(canvas, shape):
 
     canvas.shapes.append(shape)
 
-import time
-
 def _generate_auto_resize(canvas: cv.Canvas):
+    # représente la taille la plus à jour à viser lors du changement de taille de fenêtre
+    # C'est une variable non locale, commune à tous les callbacks appelés par un même canvas
     target_size = None
 
     def auto_resize(event):
