@@ -24,7 +24,7 @@ def main(page: ft.Page):
         50,
         20,
         0.1,
-        0.25
+        0.4
     )
 
     page.add(

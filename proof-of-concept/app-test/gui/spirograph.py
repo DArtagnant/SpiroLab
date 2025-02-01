@@ -2,7 +2,7 @@ import flet as ft
 from flet import canvas as cv
 from .math import random_color, point_position_from_angles
 
-NPOINTS = 2000 # Constante de test
+NPOINTS = 1000 # Constante de test
 
 def spirograph(
     center: tuple[float, float],
@@ -29,7 +29,7 @@ def spirograph(
             center, large_radius, small_radius, new_circle_angle, new_point_angle
         )
 
-        yield cv.Line(*point, *new_point, ft.Paint(ft.Colors.LIGHT_BLUE_900))
+        yield cv.Line(*point, *new_point, ft.Paint(random_color()))
 
         point, circle_angle, point_angle = new_point, new_circle_angle, new_point_angle
 
