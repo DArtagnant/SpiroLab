@@ -9,6 +9,15 @@ def main(page: ft.Page):
 
     cp = centered_canvas(page)
 
+    render_spirograph(
+        cp,
+        (0,0),
+        125,
+        200,
+        0.05,
+        0.25
+    )
+
     page.add(
         ft.Container(
             cp,
@@ -16,15 +25,6 @@ def main(page: ft.Page):
             width=float("inf"),
             expand=True,
         )
-    )
-
-    render_spirograph(
-        cp,
-        (0,0),
-        100,
-        70,
-        0.1,
-        0.5
     )
 
 def render():

@@ -1,4 +1,8 @@
 from math import sin, cos
+from random import randint
+
+def random_color():
+    return hex(randint(0,16777215)).replace("0x", "#")
 
 # A priori, le centre du grand cercle est en 0,0 (cartésien)
 def point_position_from_angles(

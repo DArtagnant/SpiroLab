@@ -1,6 +1,6 @@
 import flet as ft
 from flet import canvas as cv
-from .math import point_position_from_angles
+from .math import random_color, point_position_from_angles
 
 NPOINTS = 2000 # Constante de test
 
@@ -20,7 +20,7 @@ def spirograph(
     )
 
     for _ in range(NPOINTS):
-        yield cv.Circle(*point, 1, ft.Paint(ft.Colors.GREEN))
+        yield cv.Circle(*point, 2, ft.Paint(random_color()))
 
         new_circle_angle = circle_angle + large_angular_velocity
         new_point_angle = point_angle + small_angular_velocity
