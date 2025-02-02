@@ -13,36 +13,22 @@ from matplotlib import pyplot as plt
 import numpy as np
 import audio
 import gui
+import os
 
-# Test infructueux de découper le wav en segments d'une seconde - problème avec l'installation de FFMPEG manifestement
-# from pydub import AudioSegment
-# from pydub.utils import make_chunks
-# 
-# myaudio = AudioSegment.from_file(".\\app-test\\static_data\\test_audio.wav" , "wav") 
-# chunk_length_ms = 1000 # pydub calculates in millisec
-# chunks = make_chunks(myaudio, chunk_length_ms) #Make chunks of one sec
-# 
-# #Export all of the individual chunks as wav files
-# 
-# for i, chunk in enumerate(chunks):
-#     chunk_name = "chunk{0}.wav".format(i)
-#     print("exporting", chunk_name)
-#     chunk.export(chunk_name, format="wav")
+# Fonctionnel ! Découpe le wav en segments d'une seconde
+from pydub import AudioSegment
+from pydub.utils import make_chunks
 
-# Test infructueux de découper le wav en segments d'une seconde - problème avec l'installation de FFMPEG manifestement
-# from pydub import AudioSegment
-# from pydub.utils import make_chunks
-# 
-# myaudio = AudioSegment.from_file(".\\app-test\\static_data\\test_audio.wav" , "wav") 
-# chunk_length_ms = 1000 # pydub calculates in millisec
-# chunks = make_chunks(myaudio, chunk_length_ms) #Make chunks of one sec
-# 
-# #Export all of the individual chunks as wav files
-# 
-# for i, chunk in enumerate(chunks):
-#     chunk_name = "chunk{0}.wav".format(i)
-#     print("exporting", chunk_name)
-#     chunk.export(chunk_name, format="wav")
+myaudio = AudioSegment.from_file("./app-test/static_data/test_audio.wav" , "wav") 
+chunk_length_ms = 1000 # pydub utilise des millisecondes
+chunks = make_chunks(myaudio, chunk_length_ms)
+
+# Exportation de tous les segments comme .wav
+for i, chunk in enumerate(chunks):
+    chunk_name = "./app-test/static_data/chunk{0}.wav".format(i)
+    print("exporting", chunk_name)
+    chunk.export(chunk_name, format="wav")
+
 
 # file_info = audio.test_audio()
 # fourier = formule.fourier_transform(*file_info)
@@ -61,3 +47,9 @@ import gui
 # plt.show()
 
 gui.render()
+
+# Suppression de tous les segments audio précédemment créés
+for i, chunk in enumerate(chunks):
+    chunk_name = "./app-test/static_data/chunk{0}.wav".format(i)
+    print("removing", chunk_name)
+    os.remove(chunk_name)
