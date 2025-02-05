@@ -2,12 +2,13 @@ import flet as ft
 from flet import canvas as cv
 from types import MethodType
 
-def centered_canvas(page: ft.Page):
-    cp = cv.Canvas([])
+def centered_canvas(get_height_fn= None):
+    cp = cv.Canvas([], expand=True)
     cp.on_resize = _generate_auto_resize(cp)
-    cp.state_current_width = page.width
-    cp.state_current_height = page.height
+    cp.state_current_width = 0
+    cp.state_current_height = 0
     cp.append = MethodType(_append, cp)
+    cp.state_get_height = get_height_fn
     return cp
 
 def _append(canvas, shape):
@@ -38,24 +39,30 @@ def _generate_auto_resize(canvas: cv.Canvas):
 
     def auto_resize(event):
         nonlocal target_size
-        my_target = (event.width, event.height)
+        my_width = event.width
+        if canvas.state_get_height is not None:
+            my_height = canvas.state_get_height()
+        else:
+            my_height = event.height
+        
+        my_target = (my_width, my_height)
         target_size = my_target
+        print(my_target)
         for shape in canvas.shapes:
             if target_size != my_target:
                 # Cela veut dire qu'un resize plus recent a été demandé
                 # Ce code n'a plus de raison de s'executer
                 return None
             if isinstance(shape, cv.Circle):
-                shape.x = shape.state_absolute_x + event.width / 2
-                shape.y = -shape.state_absolute_y + event.height / 2
+                shape.x = shape.state_absolute_x + my_width / 2
+                shape.y = -shape.state_absolute_y + my_height / 2
             elif isinstance(shape, cv.Line):
-                shape.x1 = shape.state_absolute_x1 + event.width / 2
-                shape.y1 = -shape.state_absolute_y1 + event.height / 2
-                shape.x2 = shape.state_absolute_x2 + event.width / 2
-                shape.y2 = -shape.state_absolute_y2 + event.height / 2
-
-        canvas.state_current_width = event.width
-        canvas.state_current_height = event.height
+                shape.x1 = shape.state_absolute_x1 + my_width / 2
+                shape.y1 = -shape.state_absolute_y1 + my_height / 2
+                shape.x2 = shape.state_absolute_x2 + my_width / 2
+                shape.y2 = -shape.state_absolute_y2 + my_height / 2
+        canvas.state_current_width = my_width
+        canvas.state_current_height = my_height
         canvas.update()
 
     return auto_resize

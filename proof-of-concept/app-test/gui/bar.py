@@ -21,9 +21,10 @@ def settings_bar(page: ft.Page, cv: ft.canvas.Canvas):
     large_angular_velocity = ft.TextField(label="Vitesse du petit cercle", value=0.4)
     small_angular_velocity = ft.TextField(label="Vitesse du point", value=0.25)
 
-    b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
+    #b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
+    b = ft.ElevatedButton(text="Afficher", on_click=lambda a:0)
 
-    recompute_spirograph(0) # Affiche le spirographe par défaut
+    #recompute_spirograph(0) # Affiche le spirographe par défaut
 
     return ft.Column(
         [large_radius,

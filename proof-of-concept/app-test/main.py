@@ -15,6 +15,7 @@ import audio
 import gui
 import os
 
+"""
 # Fonctionnel ! Découpe le wav en segments d'une seconde
 from pydub import AudioSegment
 from pydub.utils import make_chunks
@@ -29,6 +30,13 @@ for i, chunk in enumerate(chunks):
     print("exporting", chunk_name)
     chunk.export(chunk_name, format="wav")
 
+# Suppression de tous les segments audio précédemment créés
+for i, chunk in enumerate(chunks):
+    chunk_name = "./app-test/static_data/chunk{0}.wav".format(i)
+    print("removing", chunk_name)
+    os.remove(chunk_name)
+
+"""
 
 # file_info = audio.test_audio()
 # fourier = formule.fourier_transform(*file_info)
@@ -47,9 +55,3 @@ for i, chunk in enumerate(chunks):
 # plt.show()
 
 gui.render()
-
-# Suppression de tous les segments audio précédemment créés
-for i, chunk in enumerate(chunks):
-    chunk_name = "./app-test/static_data/chunk{0}.wav".format(i)
-    print("removing", chunk_name)
-    os.remove(chunk_name)
