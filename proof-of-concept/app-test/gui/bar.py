@@ -1,11 +1,11 @@
 import flet as ft
 from .spirograph import render_spirograph
 
-def settings_bar(page: ft.Page, cv: ft.canvas.Canvas):
+def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     def recompute_spirograph(_):
-        cv.shapes = []
+        canvas.shapes = []
         render_spirograph(
-            cv,
+            canvas,
             (0,0),
             float(large_radius.value),
             float(small_radius.value),
@@ -25,10 +25,14 @@ def settings_bar(page: ft.Page, cv: ft.canvas.Canvas):
 
     recompute_spirograph(0) # Affiche le spirographe par défaut
 
-    return ft.Column(
-        [large_radius,
-        small_radius,
-        large_angular_velocity,
-        small_angular_velocity,
-        b]
-    )
+    return ft.Row([
+        ft.Column([
+            large_radius,
+            small_radius
+        ]),
+        ft.Column([
+            large_angular_velocity,
+            small_angular_velocity,
+            b
+        ])
+    ])
