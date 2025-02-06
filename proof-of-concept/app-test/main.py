@@ -7,8 +7,8 @@
 import formule
 from matplotlib import pyplot as plt
 import numpy as np
-import audio
 import gui
+import static_data
 import os
 
 
@@ -34,5 +34,20 @@ for i, chunk in enumerate(chunks):
     print("removing", chunk_name)
     os.remove(chunk_name)
 """
+
+from soundfile import read
+from importlib.resources import open_binary
+
+# Récupère les données de l'audio - La3 440Hz ici
+A440 = read(open_binary("static_data", "la3.wav"))[0]
+amogus = read(open_binary("static_data", "amogus.wav"))[0]
+# Echelle en abscisse pour le tracé
+t = [i for i in range(len(amogus))]
+
+# Affichage du signal sonore
+plt.plot(t, amogus)
+plt.show()
+
+audio_ft = formule.fourier_transform(amogus[0], amogus[1], 1)
 
 gui.render()
