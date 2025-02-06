@@ -1,6 +1,6 @@
 import flet as ft
 from flet import canvas as cv
-from .math import random_color, point_position_from_angles
+from formule.math import random_color, point_position_from_angles
 
 NPOINTS = 1000 # Constante de test
 
@@ -49,3 +49,6 @@ def render_spirograph(
         small_angular_velocity
     ):
         canvas.append(line)
+
+def render_spirographs_from_data(data):
+    print(len(data))
