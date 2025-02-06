@@ -3,10 +3,6 @@
 # if not __package__ == "app-test":
 #     raise ImportError("Le code doit être appelé en tant que module : `python -m app-test`")
 
-import os
-
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-
 
 import formule
 from matplotlib import pyplot as plt
@@ -15,6 +11,8 @@ import audio
 import gui
 import os
 
+
+"""
 # Fonctionnel ! Découpe le wav en segments d'une seconde
 from pydub import AudioSegment
 from pydub.utils import make_chunks
@@ -28,6 +26,14 @@ for i, chunk in enumerate(chunks):
     chunk_name = "./app-test/static_data/chunk{0}.wav".format(i)
     print("exporting", chunk_name)
     chunk.export(chunk_name, format="wav")
+
+
+# Suppression de tous les segments audio précédemment créés
+for i, chunk in enumerate(chunks):
+    chunk_name = "./app-test/static_data/chunk{0}.wav".format(i)
+    print("removing", chunk_name)
+    os.remove(chunk_name)
+"""
 
 
 # file_info = audio.test_audio()
@@ -47,9 +53,3 @@ for i, chunk in enumerate(chunks):
 # plt.show()
 
 gui.render()
-
-# Suppression de tous les segments audio précédemment créés
-for i, chunk in enumerate(chunks):
-    chunk_name = "./app-test/static_data/chunk{0}.wav".format(i)
-    print("removing", chunk_name)
-    os.remove(chunk_name)
