@@ -4,6 +4,9 @@ from flet import canvas as cv
 
 from .bar import settings_bar
 from .state_provider import centered_canvas
+from .spirograph import render_spirographs_from_data
+from formule import fourier
+from audio import test_audio
 
 def main(page: ft.Page):
     page.title = "Proof of Concept"
@@ -20,6 +23,7 @@ def main(page: ft.Page):
             expand=True,
         ),
     )
+    render_spirographs_from_data(fourier.fourier_transform(*test_audio()))
 
 def render():
     ft.app(main)
