@@ -45,9 +45,10 @@ amogus = read(open_binary("static_data", "amogus.wav"))[0]
 t = [i for i in range(len(amogus))]
 
 # Affichage du signal sonore
-plt.plot(t, amogus)
+plt.plot(t, amogus, 'r', lw=0.1)
 plt.show()
 
-audio_ft = formule.fourier_transform(amogus[0], amogus[1], 1)
+# Fourier ist broken
+# A440 = formule.fourier_transform(amogus[0], amogus[1], 1)
 
 gui.render()
