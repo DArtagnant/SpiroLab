@@ -14,5 +14,4 @@ def fourier_transform(data, sample_rate, channel_number):
     channel_1_padded[0:len(channel_1)] = channel_1
 
     # fourier
-    fourier = np.fft.fft(channel_1)
-    return fourier[0:len(fourier)//2]
+    return np.fft.fft(channel_1)
