@@ -23,7 +23,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
 
-    recompute_spirograph(0) # Affiche le spirographe par défaut
+    # recompute_spirograph(0) # Affiche le spirographe par défaut
 
     return ft.Row([
         ft.Column([
