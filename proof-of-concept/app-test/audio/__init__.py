@@ -1,1 +1,1 @@
-from .getter import from_file, test_audio
+from .getter import test_audio

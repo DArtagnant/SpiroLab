@@ -8,9 +8,16 @@ from scipy.fft import rfft, rfftfreq
 def partition_list(lst, size):
     return [lst[i:i + size] for i in range(0, len(lst), size)]
 
+def test_audio():
+    """
+    Renvoie (data, sample_rate, channel_number)
+    """
+    file = wav.read(open_binary("static_data", "amogus.wav"))
+    return file[1], file[0], 1
+
 # Récupère les données de l'audio
-amogus = wav.read(open_binary("static_data", "amogus.wav"))[1]
-print(amogus)
+SAMPLE_RATE = test_audio()[1]
+amogus = test_audio()[0]
 chunks = partition_list(amogus, 750)
 
 '''
@@ -28,12 +35,3 @@ xf2 = rfftfreq(len(amogus), 1 / 44100)
 plt.plot(xf2, np.abs(yf2), 'b', lw=0.1)
 
 plt.show()
-
-def from_file(obj):
-    return wav.read(obj)
-
-def test_audio():
-    """
-    Renvoie (data, sample_rate, channel_number)
-    """
-    return *from_file(open_binary("static_data", "amogus.wav")), 1
