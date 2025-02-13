@@ -1,8 +1,11 @@
 from math import sin, cos
-from random import randint
+from colorsys import hsv_to_rgb
 
 def random_color():
-    return hex(randint(0,16777215)).replace("0x", "#")
+    hue = 0.0
+    while True:
+        yield "#{}{}{}".format(*map(lambda n:hex(int(255*n))[2:].zfill(2), hsv_to_rgb(hue, 1, 1)))
+        hue = (hue + 0.02)%1.0
 
 # A priori, le centre du grand cercle est en 0,0 (cartésien)
 def point_position_from_angles(
