@@ -3,7 +3,7 @@ from flet import canvas as cv
 from formule.math import random_color, point_position_from_angles
 import numpy as np
 
-NPOINTS = 1000 # Constante de test
+NBPOINTS = 200 # Constante de test
 
 def spirograph(
     center: tuple[float, float],
@@ -20,9 +20,9 @@ def spirograph(
         center, large_radius, small_radius, circle_angle, point_angle
     )
 
-    colors = random_color()
+    colors = random_color(NBPOINTS)
 
-    for _ in range(NPOINTS):
+    for _ in range(NBPOINTS):
         #yield cv.Circle(*point, 2, ft.Paint(random_color()))
 
         new_circle_angle = circle_angle + large_angular_velocity
@@ -51,6 +51,7 @@ def render_spirograph(
         large_angular_velocity,
         small_angular_velocity
     ):
+        # TODO : interpolation entre les points avec scipy.interpolate
         canvas.append(line)
 
 def render_spirographs_from_data(cp ,data):
