@@ -4,3 +4,4 @@ numpy       # processing
 matplotlib  # for debugging
 soundfile   # open audio file
 flet        # GUI
+scipy       # Fourier
