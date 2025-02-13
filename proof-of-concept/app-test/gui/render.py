@@ -7,6 +7,7 @@ from .state_provider import centered_canvas
 from .spirograph import render_spirographs_from_data
 from formule import fourier
 from audio import test_audio
+from scipy.fft import rfft
 
 def main(page: ft.Page):
     page.title = "Proof of Concept"
@@ -23,7 +24,7 @@ def main(page: ft.Page):
             expand=True,
         ),
     )
-    render_spirographs_from_data(cp, fourier.fourier_transform(*test_audio()))
+    render_spirographs_from_data(cp, rfft(test_audio()[0]))
 
 def render():
     ft.app(main)
