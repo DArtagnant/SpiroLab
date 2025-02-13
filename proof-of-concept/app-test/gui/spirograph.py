@@ -1,6 +1,7 @@
 import flet as ft
 from flet import canvas as cv
 from formule.math import random_color, point_position_from_angles
+import numpy as np
 
 NPOINTS = 1000 # Constante de test
 
@@ -50,5 +51,7 @@ def render_spirograph(
     ):
         canvas.append(line)
 
-def render_spirographs_from_data(data):
-    print(len(data))
+def render_spirographs_from_data(cp ,data):
+    spiro = tuple(map(lambda x: np.real(x)/20, data[0:6]))
+    print(spiro)
+    render_spirograph(cp, (spiro[0], spiro[1]),*spiro[2:])

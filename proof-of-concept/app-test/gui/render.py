@@ -23,7 +23,7 @@ def main(page: ft.Page):
             expand=True,
         ),
     )
-    render_spirographs_from_data(fourier.fourier_transform(*test_audio()))
+    render_spirographs_from_data(cp, fourier.fourier_transform(*test_audio()))
 
 def render():
     ft.app(main)

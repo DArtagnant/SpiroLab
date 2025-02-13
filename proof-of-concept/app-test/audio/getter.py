@@ -8,4 +8,4 @@ def test_audio():
     """
     Renvoie (data, sample_rate, channel_number)
     """
-    return *from_file(open_binary("static_data", "test_audio.wav")), 2
+    return *from_file(open_binary("static_data", "amogus.wav")), 1
