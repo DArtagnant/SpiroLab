@@ -20,6 +20,8 @@ def spirograph(
         center, large_radius, small_radius, circle_angle, point_angle
     )
 
+    colors = random_color()
+
     for _ in range(NPOINTS):
         #yield cv.Circle(*point, 2, ft.Paint(random_color()))
 
@@ -30,7 +32,7 @@ def spirograph(
             center, large_radius, small_radius, new_circle_angle, new_point_angle
         )
 
-        yield cv.Line(*point, *new_point, ft.Paint(random_color()))
+        yield cv.Line(*point, *new_point, ft.Paint(next(colors)))
 
         point, circle_angle, point_angle = new_point, new_circle_angle, new_point_angle
 
@@ -52,6 +54,6 @@ def render_spirograph(
         canvas.append(line)
 
 def render_spirographs_from_data(cp ,data):
-    spiro = tuple(map(lambda x: np.real(x)/20, data[0:6]))
+    spiro = tuple(map(lambda x: np.real(x)/50, data[7:13]))
     print(spiro)
     render_spirograph(cp, (spiro[0], spiro[1]),*spiro[2:])

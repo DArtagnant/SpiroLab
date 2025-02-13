@@ -46,11 +46,8 @@ t1 = [i for i in range(len(A440))]
 t2 = [i for i in range(len(amogus))]
 
 # Affichage du signal sonore
-plt.subplot(2, 1, 1)
-plt.plot(t1, A440, 'r', lw=0.1)
-plt.subplot(2, 1, 2)
-plt.plot(t2, amogus, 'r', lw=0.1)
-plt.show()
+# plt.plot(t, amogus, 'r', lw=0.1)
+# plt.show()
 
 # Fourier ist broken
 # A440 = formule.fourier_transform(amogus[0], amogus[1], 1)
