@@ -15,23 +15,24 @@ def test_audio():
     file = wav.read(open_binary("static_data", "amogus.wav"))
     return file[1], file[0], 1
 
-# Récupère les données de l'audio
-SAMPLE_RATE = test_audio()[1]
-amogus = test_audio()[0]
-chunks = partition_list(amogus, 750)
+if __name__ == "__main__":
+    # Récupère les données de l'audio
+    SAMPLE_RATE = test_audio()[1]
+    amogus = test_audio()[0]
+    chunks = partition_list(amogus, 750)
 
-'''
-for i in range(100):
-    yf2 = rfft(chunks[i])
-    xf2 = rfftfreq(len(chunks[i]), 1 / 44100)
-    plt.subplot(10, 10, i+1)
-    plt.xscale("log")
-    plt.yscale("log")
+    '''
+    for i in range(100):
+        yf2 = rfft(chunks[i])
+        xf2 = rfftfreq(len(chunks[i]), 1 / 44100)
+        plt.subplot(10, 10, i+1)
+        plt.xscale("log")
+        plt.yscale("log")
+        plt.plot(xf2, np.abs(yf2), 'b', lw=0.1)
+    '''
+
+    yf2 = rfft(amogus)
+    xf2 = rfftfreq(len(amogus), 1 / 44100)
     plt.plot(xf2, np.abs(yf2), 'b', lw=0.1)
-'''
 
-yf2 = rfft(amogus)
-xf2 = rfftfreq(len(amogus), 1 / 44100)
-plt.plot(xf2, np.abs(yf2), 'b', lw=0.1)
-
-plt.show()
+    plt.show()

@@ -1,10 +1,16 @@
 import flet as ft
 from flet import canvas as cv
-from formule.math import random_color, point_position_from_angles
+from formule.math import progressive_color, distance
 import numpy as np
+from math import sin, cos
+from itertools import pairwise
 
-NBPOINTS = 200 # Constante de test
+NBPOINTS = 300 # Constante de test
+CONSIDER_SAME = (20, 20)
 
+DISTANCE_MAX = 100
+
+#TODO detecter lorsqu'on a fait un tour complet
 def spirograph(
     center: tuple[float, float],
     large_radius: float, 
@@ -16,25 +22,48 @@ def spirograph(
     circle_angle = 0 # Angle du centre du petit cercle dans le grand cercle
     point_angle = 0 # Angle du point au petit cercle
 
-    point = point_position_from_angles(
-        center, large_radius, small_radius, circle_angle, point_angle
-    )
-
-    colors = random_color(NBPOINTS)
+    previous_point = None
+    point = None
+    colors = progressive_color(NBPOINTS)
 
     for _ in range(NBPOINTS):
-        #yield cv.Circle(*point, 2, ft.Paint(random_color()))
+        previous_point = point
+        previous_circle_angle = circle_angle
+        previous_point_angle = point_angle
+        circle_angle += large_angular_velocity
+        point_angle += small_angular_velocity
 
-        new_circle_angle = circle_angle + large_angular_velocity
-        new_point_angle = point_angle + small_angular_velocity
+        point = calc_point(center, large_radius, small_radius, circle_angle, point_angle)
+        
+        # on ignore la suite pour le premier point
+        if previous_point is None: continue
 
-        new_point = point_position_from_angles(
-            center, large_radius, small_radius, new_circle_angle, new_point_angle
-        )
+        for point1, point2 in pairwise(interpolate(center, large_radius, small_radius, previous_point, point, previous_circle_angle, previous_point_angle, circle_angle, point_angle)):
+            yield cv.Line(*point1, *point2, ft.Paint(next(colors)))
 
-        yield cv.Line(*point, *new_point, ft.Paint(next(colors)))
+def interpolate(center, large_radius, small_radius, point1, point2, circle_angle1, point_angle1, circle_angle2, point_angle2):
+    if distance(point1, point2) < DISTANCE_MAX:
+        return point1, point2
+    circle_angle3 = (circle_angle1 + circle_angle2)/2
+    point_angle3 = (point_angle1 + point_angle2)/2
+    point3 = calc_point(center, large_radius, small_radius, circle_angle3, point_angle3)
+    return (point1,
+            *interpolate(center, large_radius, small_radius, point1, point3, circle_angle1, point_angle1, circle_angle3, point_angle3),
+            *interpolate(center, large_radius, small_radius, point3, point2, circle_angle3, point_angle3, circle_angle2, point_angle2),
+            point2)
 
-        point, circle_angle, point_angle = new_point, new_circle_angle, new_point_angle
+def calc_point(center, large_radius, small_radius, circle_angle, point_angle):
+    small_center = (
+        center[0] + large_radius*cos(circle_angle),
+        center[1] + large_radius*sin(circle_angle),
+    )
+    
+    point = (
+        small_center[0] + small_radius*cos(point_angle),
+        small_center[1] + small_radius*sin(point_angle),
+    )
+    return point
+
 
 def render_spirograph(
     canvas: cv.Canvas,
