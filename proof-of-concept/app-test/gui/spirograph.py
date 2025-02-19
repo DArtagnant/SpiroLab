@@ -43,14 +43,16 @@ def spirograph(
 
 def interpolate(center, large_radius, small_radius, point1, point2, circle_angle1, point_angle1, circle_angle2, point_angle2):
     if distance(point1, point2) < DISTANCE_MAX:
-        return point1, point2
-    circle_angle3 = (circle_angle1 + circle_angle2)/2
-    point_angle3 = (point_angle1 + point_angle2)/2
-    point3 = calc_point(center, large_radius, small_radius, circle_angle3, point_angle3)
-    return (point1,
-            *interpolate(center, large_radius, small_radius, point1, point3, circle_angle1, point_angle1, circle_angle3, point_angle3),
-            *interpolate(center, large_radius, small_radius, point3, point2, circle_angle3, point_angle3, circle_angle2, point_angle2),
-            point2)
+        yield point1
+        yield point2
+    else:
+        circle_angle3 = (circle_angle1 + circle_angle2)/2
+        point_angle3 = (point_angle1 + point_angle2)/2
+        point3 = calc_point(center, large_radius, small_radius, circle_angle3, point_angle3)
+        yield point1
+        yield from interpolate(center, large_radius, small_radius, point1, point3, circle_angle1, point_angle1, circle_angle3, point_angle3)
+        yield from interpolate(center, large_radius, small_radius, point3, point2, circle_angle3, point_angle3, circle_angle2, point_angle2)
+        yield point2
 
 def calc_point(center, large_radius, small_radius, circle_angle, point_angle):
     small_center = (
