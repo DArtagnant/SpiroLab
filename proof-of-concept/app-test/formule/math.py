@@ -1,5 +1,5 @@
 from colorsys import hsv_to_rgb
-from typing import Optional
+from math import sin, cos
 
 def progressive_color(nb_points):
     hue = 0.0
@@ -10,3 +10,16 @@ def progressive_color(nb_points):
 
 def distance(a: tuple[float, float], b: tuple[float, float]) -> float:
     return ((a[0] - b[0])**2 + (a[1] - b[1])**2)**0.5
+
+
+def calc_point(center, large_radius, small_radius, circle_angle, point_angle):
+    small_center = (
+        center[0] + large_radius*cos(circle_angle),
+        center[1] + large_radius*sin(circle_angle),
+    )
+    
+    point = (
+        small_center[0] + small_radius*cos(point_angle),
+        small_center[1] + small_radius*sin(point_angle),
+    )
+    return point
