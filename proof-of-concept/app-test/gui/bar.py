@@ -11,6 +11,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             float(small_radius.value),
             float(large_angular_velocity.value),
             float(small_angular_velocity.value),
+            float(resolution.value),
         )
         page.update()
 
@@ -20,6 +21,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     large_angular_velocity = ft.TextField(label="Vitesse du petit cercle", value=0.4)
     small_angular_velocity = ft.TextField(label="Vitesse du point", value=0.25)
+
+    resolution = ft.TextField(label="Resolution", value=50)
 
     b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
 
@@ -38,11 +41,14 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     return ft.Row([
         ft.Column([
             large_radius,
-            small_radius
+            small_radius,
         ]),
         ft.Column([
             large_angular_velocity,
             small_angular_velocity,
-            b
+        ]),
+        ft.Column([
+            resolution,
+            b,
         ])
     ])

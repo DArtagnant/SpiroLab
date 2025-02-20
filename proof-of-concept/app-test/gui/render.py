@@ -24,7 +24,8 @@ def main(page: ft.Page):
             expand=True,
         ),
     )
-    render_spirographs_from_data(cp, rfft(test_audio()[0]))
+    print("called")
+    #render_spirographs_from_data(cp, rfft(test_audio()[0]))
 
 def render():
     ft.app(main)

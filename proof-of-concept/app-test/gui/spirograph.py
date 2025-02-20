@@ -6,9 +6,6 @@ from itertools import pairwise
 from collections import deque
 
 NBPOINTS = 300 # Constante de test
-CONSIDER_SAME = (20, 20)
-
-DISTANCE_MAX = 50
 
 #TODO detecter lorsqu'on a fait un tour complet
 def spirograph(
@@ -17,6 +14,7 @@ def spirograph(
     small_radius: float, 
     large_angular_velocity: float,
     small_angular_velocity: float,
+    interpolate_distance_max: float,
 ):
     """Générateur de positions des points du spirographe"""
     circle_angle2 = 0 # Angle du centre du petit cercle dans le grand cercle
@@ -43,7 +41,7 @@ def spirograph(
         while len(to_be_constructed) > 1:
             point1 = to_be_constructed.popleft()
             point2 = to_be_constructed[0]
-            if distance(point1, point2) < DISTANCE_MAX:
+            if distance(point1, point2) < interpolate_distance_max:
                 yield cv.Line(*point1, *point2, ft.Paint(next(colors)))
             else:
                 circle_angle12 = (circle_angle1 + circle_angle2)/2
@@ -59,18 +57,20 @@ def render_spirograph(
     small_radius: float, 
     large_angular_velocity: float,
     small_angular_velocity: float,
+    interpolate_distance_max: float,
 ):
     for line in spirograph(
         center,
         large_radius,
         small_radius,
         large_angular_velocity,
-        small_angular_velocity
+        small_angular_velocity,
+        interpolate_distance_max,
     ):
         # TODO : interpolation entre les points avec scipy.interpolate
         canvas.append(line)
 
-def render_spirographs_from_data(cp ,data):
+def render_spirographs_from_data(cp, data):
     spiro = tuple(map(lambda x: np.real(x)/50, data[7:13]))
     print(spiro)
-    render_spirograph(cp, (spiro[0], spiro[1]),*spiro[2:])
+    render_spirograph(cp, (spiro[0], spiro[1]),*spiro[2:], 50)
