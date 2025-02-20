@@ -9,8 +9,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             (0,0),
             float(large_radius.value),
             float(small_radius.value),
-            float(large_angular_velocity.value),
-            float(small_angular_velocity.value),
+            int(large_frequency.value),
+            int(small_frequency.value),
             float(resolution.value),
         )
         page.update()
@@ -19,8 +19,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     large_radius = ft.TextField(label="Rayon du grand cercle", value=125)
     small_radius = ft.TextField(label="Rayon du petit cercle", value=200)
 
-    large_angular_velocity = ft.TextField(label="Vitesse du petit cercle", value=0.4)
-    small_angular_velocity = ft.TextField(label="Vitesse du point", value=0.25)
+    large_frequency = ft.TextField(label="Fréquence du petit cercle", value=100)
+    small_frequency = ft.TextField(label="Fréquence du point", value=50)
 
     resolution = ft.TextField(label="Resolution", value=50)
 
@@ -44,8 +44,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             small_radius,
         ]),
         ft.Column([
-            large_angular_velocity,
-            small_angular_velocity,
+            large_frequency,
+            small_frequency,
         ]),
         ft.Column([
             resolution,

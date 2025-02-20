@@ -3,9 +3,7 @@ from flet import canvas as cv
 from formule.math import progressive_color, distance, calc_point, average_angle
 import numpy as np
 from collections import deque
-from math import pi
-
-NBPOINTS = 300 # Constante de test
+from math import pi, lcm
 
 #TODO detecter lorsqu'on a fait un tour complet
 def spirograph(
@@ -15,15 +13,17 @@ def spirograph(
     large_angular_velocity: float,
     small_angular_velocity: float,
     interpolate_distance_max: float,
+    nb_points: int,
 ):
+    print(f"Affichage d'un spiro à {nb_points} points")
     """Générateur de positions des points du spirographe"""
     circle_angle2 = 0 # Angle du centre du petit cercle dans le grand cercle
     point_angle2 = 0 # Angle du point au petit cercle
 
     point1 = None
     point2 = None
-    colors = progressive_color(NBPOINTS)
-    for _ in range(NBPOINTS):
+    colors = progressive_color(nb_points)
+    for _ in range(nb_points):
         point1 = point2
         circle_angle1 = circle_angle2
         point_angle1 = point_angle2
@@ -61,17 +61,18 @@ def render_spirograph(
     center: tuple[float, float],
     large_radius: float, 
     small_radius: float, 
-    large_angular_velocity: float,
-    small_angular_velocity: float,
+    large_frequency: int,
+    small_frequency: int,
     interpolate_distance_max: float,
 ):
     for line in spirograph(
         center,
         large_radius,
         small_radius,
-        large_angular_velocity,
-        small_angular_velocity,
+        2*pi / large_frequency, # Conversion des fréquences en "vitesse angulaire"
+        2*pi / small_frequency,
         interpolate_distance_max,
+        lcm(large_frequency, small_frequency) + 1, # Permet de limiter le nombre de calls en donnant le nombre de points exact du spirographe
     ):
         canvas.append(line)
 
