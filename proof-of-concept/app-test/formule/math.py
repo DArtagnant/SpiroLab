@@ -1,5 +1,5 @@
 from colorsys import hsv_to_rgb
-from math import sin, cos
+from math import sin, cos, atan2, pi
 
 def progressive_color(nb_points):
     hue = 0.0
@@ -23,3 +23,9 @@ def calc_point(center, large_radius, small_radius, circle_angle, point_angle):
         small_center[1] + small_radius*sin(point_angle),
     )
     return point
+
+def average_angle(a, b):
+    if (a + pi) % 2*pi == b:
+        return ((a+b)/2) % 2*pi
+    else:
+        return atan2(sin(a) + sin(b), cos(a) + cos(b))

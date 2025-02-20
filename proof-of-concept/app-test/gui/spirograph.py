@@ -1,9 +1,9 @@
 import flet as ft
 from flet import canvas as cv
-from formule.math import progressive_color, distance, calc_point
+from formule.math import progressive_color, distance, calc_point, average_angle
 import numpy as np
-from itertools import pairwise
 from collections import deque
+from math import pi
 
 NBPOINTS = 300 # Constante de test
 
@@ -23,32 +23,38 @@ def spirograph(
     point1 = None
     point2 = None
     colors = progressive_color(NBPOINTS)
-
     for _ in range(NBPOINTS):
         point1 = point2
         circle_angle1 = circle_angle2
         point_angle1 = point_angle2
 
         circle_angle2 += large_angular_velocity
+        circle_angle2 %= 2*pi
         point_angle2 += small_angular_velocity
+        point_angle2 %= 2*pi
         point2 = calc_point(center, large_radius, small_radius, circle_angle2, point_angle2)
         
         # on ignore la suite pour le premier point
         if point1 is None: continue
 
-        to_be_constructed = deque((point1, point2))
+        to_be_constructed = deque(((point1, circle_angle1, point_angle1), (point2, circle_angle2, point_angle2)))
 
-        while len(to_be_constructed) > 1:
-            point1 = to_be_constructed.popleft()
-            point2 = to_be_constructed[0]
+        operations = 0
+        while len(to_be_constructed) > 1 and operations < 10**4:
+            point1, circle_angle1, point_angle1 = to_be_constructed.popleft()
+            point2, circle_angle2, point_angle2 = to_be_constructed[0]
             if distance(point1, point2) < interpolate_distance_max:
                 yield cv.Line(*point1, *point2, ft.Paint(next(colors)))
             else:
-                circle_angle12 = (circle_angle1 + circle_angle2)/2
-                point_angle12 = (point_angle1 + point_angle2)/2
+                circle_angle12 = average_angle(circle_angle1, circle_angle2)
+                point_angle12 = average_angle(point_angle1, point_angle2)
                 point12 = calc_point(center, large_radius, small_radius, circle_angle12, point_angle12)
-                to_be_constructed.appendleft(point12)
-                to_be_constructed.appendleft(point1)
+                to_be_constructed.appendleft((point12, circle_angle12, point_angle12))
+                to_be_constructed.appendleft((point1, circle_angle1, point_angle1))
+            operations += 1
+        if operations >= 10**4:
+            # Afin d'éviter une boucle infini qui mange toute la mémoire RAM
+            raise Exception("Unfinished loop")
 
 def render_spirograph(
     canvas: cv.Canvas,
@@ -67,7 +73,6 @@ def render_spirograph(
         small_angular_velocity,
         interpolate_distance_max,
     ):
-        # TODO : interpolation entre les points avec scipy.interpolate
         canvas.append(line)
 
 def render_spirographs_from_data(cp, data):
