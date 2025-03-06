@@ -5,7 +5,6 @@ import numpy as np
 from collections import deque
 from math import pi, lcm
 
-#TODO detecter lorsqu'on a fait un tour complet
 def spirograph(
     center: tuple[float, float],
     large_radius: float, 
