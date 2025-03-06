@@ -42,8 +42,8 @@ def _generate_auto_resize(canvas: cv.Canvas):
         target_size = my_target
         for shape in canvas.shapes:
             if target_size != my_target:
-                # Cela veut dire qu'un resize plus recent a été demandé
-                # Ce code n'a plus de raison de s'executer
+                # Cela veut dire qu'un resize plus récent a été demandé
+                # Ce code n'a plus de raison de s'exécuter
                 return None
             if isinstance(shape, cv.Circle):
                 shape.x = shape.state_absolute_x + event.width / 2

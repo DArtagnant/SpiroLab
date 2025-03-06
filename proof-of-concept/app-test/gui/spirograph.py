@@ -53,7 +53,7 @@ def spirograph(
                 to_be_constructed.appendleft((point1, circle_angle1, point_angle1))
             operations += 1
         if operations >= 10**4:
-            # Afin d'éviter une boucle infini qui mange toute la mémoire RAM
+            # Afin d'éviter une boucle infinie qui mange toute la mémoire RAM
             raise Exception("Unfinished loop")
 
 def render_spirograph(
