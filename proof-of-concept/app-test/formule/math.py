@@ -1,5 +1,5 @@
 from colorsys import hsv_to_rgb
-from math import sin, cos, atan2, pi
+from math import sin, cos, acos, atan2, pi
 
 def progressive_color(nb_points):
     hue = 0.0
@@ -29,3 +29,18 @@ def average_angle(a, b):
         return ((a+b)/2) % 2*pi
     else:
         return atan2(sin(a) + sin(b), cos(a) + cos(b))
+
+def normal_angle_from_points(
+    A: tuple[int, int], B: tuple[int, int], C: tuple[int, int]
+):
+    # Pour éviter une division par 0, on vérifie que les vecteurs ne sont pas nuls
+    if A == B or A == C:
+        return None
+    AB = (B[0] - A[0], B[1] - A[1])
+    AC = (C[0] - A[0], C[1] - A[1])
+
+    dot_prod = AB[0] * AC[0] + AB[1] * AC[1]
+    # On réutilise la fonction distance pour la norme, voir plus haut
+
+    angle = acos(dot_prod / (distance(AB, (0,0)) * distance(AC, (0,0))))
+    return angle
