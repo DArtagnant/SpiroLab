@@ -5,6 +5,8 @@ from time import sleep
 from numpy import real, imag
 from random import randint
 
+max_spiros = 5
+
 def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     def recompute_spirograph(_):
         canvas.shapes = []
@@ -21,15 +23,15 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     def recompute_spirograph_fourier():
         for i in range(1, len(fourier())-1):
-            if i%5 == 0:
+            if i%max_spiros == 0:
                 canvas.shapes = []
             render_spirograph(
                 canvas,
-                (randint(-100, 100), randint(-100, 100)),
-                float(str(abs(real(fourier()[i])))[:3]),
-                float(str(abs(real(fourier()[i+1])))[:3]),
-                int(str(abs(imag(fourier()[i])))[:2]),
-                int(str(abs(imag(fourier()[i+1])))[:2]),
+                (randint(-400, 400), randint(-200, 200)),
+                float(str(abs(real(fourier()[i])))[:3])/5,
+                float(str(abs(real(fourier()[i+1])))[:3])/5,
+                int(str(abs(imag(fourier()[i])))[:2])%50 + 1,
+                int(str(abs(imag(fourier()[i+1])))[:2])%50 + 1,
                 float(resolution.value),
             )
             page.update()
@@ -48,7 +50,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
         if e.key == 'R':
-            recompute_spirograph_fourier("")
+            recompute_spirograph_fourier()
         if e.key == 'M':
             recompute_spirograph("") # Affiche le spirographe par défaut
 
