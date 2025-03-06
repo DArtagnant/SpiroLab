@@ -22,7 +22,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     large_frequency = ft.TextField(label="Fréquence du petit cercle", value=100)
     small_frequency = ft.TextField(label="Fréquence du point", value=50)
 
-    resolution = ft.TextField(label="Resolution", value=50)
+    resolution = ft.TextField(label="Resolution", value=1.57)
 
     b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
 
