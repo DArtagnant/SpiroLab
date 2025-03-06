@@ -22,7 +22,7 @@ def calc_point(center, large_radius, small_radius, circle_angle, point_angle):
         small_center[0] + small_radius*cos(point_angle),
         small_center[1] + small_radius*sin(point_angle),
     )
-    return point
+    return point, circle_angle, point_angle
 
 def average_angle(a, b):
     if (a + pi) % 2*pi == b:
