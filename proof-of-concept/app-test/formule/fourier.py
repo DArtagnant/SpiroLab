@@ -2,7 +2,7 @@ import numpy as np
 
 def fourier_transform(data, sample_rate, channel_number):
     if channel_number == 2:
-        channel_1 = np.mean(data, axis=1) #moyenne car 2 channels
+        channel_1 = np.mean(data, axis=1) # moyenne car 2 channels
     elif channel_number == 1:
         channel_1 = data
     else:
