@@ -25,7 +25,7 @@ def spirograph(
     point2 = None
     point3 = None
     colors = progressive_color(nb_points)
-    for _ in range(nb_points):
+    for _ in range(nb_points+1):
         point1 = point2
         point2 = point3
         circle_angle1 = circle_angle2
