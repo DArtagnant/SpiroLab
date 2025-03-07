@@ -18,7 +18,7 @@
 ## Composition
 
 |                   **Élément**                                                                    |       **État**     |
-|:------------------------------------------------------------------------------------------------|:-------------------:|
+|:-------------------------------------------------------------------------------------------------|:-------------------:|
 | Logo projet : ASCII art ci-dessus ?                                                              | Partiellement fait |
 | Liste membres équipe, infos scolaires                                                            | Fait               |
 | Résumé projet, 500 carac max : description, origine, problématique, objectifs (atteints ou non)  | Non-fait           |
