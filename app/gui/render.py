@@ -1,6 +1,8 @@
 import flet as ft
+import flet_audio_recorder as far
 from flet import canvas as cv
 
+from time import sleep
 
 from .bar import settings_bar
 from .state_provider import centered_canvas

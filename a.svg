@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="500" height="500" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- Segment 1: from (50,50) to (150,80) with red -->
+  <line x1="50" y1="50" x2="150" y2="80" stroke="red" stroke-width="2" />
+  
+  <!-- Segment 2: from (150,80) to (250,120) with green -->
+  <line x1="150" y1="80" x2="250" y2="120" stroke="green" stroke-width="2" />
+  
+  <!-- Segment 3: from (250,120) to (350,100) with blue -->
+  <line x1="250" y1="120" x2="350" y2="100" stroke="rgb({red}, 200, 200)" stroke-width="2" />
+  
+  <!-- Segment 4: from (350,100) to (450,150) with orange -->
+  <line x1="350" y1="100" x2="450" y2="150" stroke="orange" stroke-width="2" />
+</svg>
