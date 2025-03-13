@@ -1,6 +1,6 @@
 import flet as ft
 from .spirograph import render_spirograph
-from audio.getter import fourier
+from audio.getter_new import read_wav
 from time import sleep
 from numpy import real, imag
 from random import randint
@@ -21,20 +21,25 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         )
         page.update()
 
-    def recompute_spirograph_fourier():
-        for i in range(1, len(fourier())-1):
+    def recompute_spirograph_from_wav():
+        file = read_wav()
+        print(len(file))
+        for i in range(len(file)):
             if i%max_spiros == 0:
                 canvas.shapes = []
+            data = file[i]
+            # TODO : fix les valeurs de "normalisation" un peu hasardeuses
             render_spirograph(
                 canvas,
                 (randint(-400, 400), randint(-200, 200)),
-                float(str(abs(real(fourier()[i])))[:3])/5,
-                float(str(abs(real(fourier()[i+1])))[:3])/5,
-                int(str(abs(imag(fourier()[i])))[:2])%50 + 1,
-                int(str(abs(imag(fourier()[i+1])))[:2])%50 + 1,
-                float(resolution.value),
+                abs(data[0])*3 + 5, 
+                abs(data[1])*3 + 5, 
+                int(data[2])%50 + 1,
+                int(data[3])%50 + 1, 
+                abs(float(data[4]))/10 + 40 # TODO : plus clean : Empêche la précision d'être trop grande ou petite 
             )
             page.update()
+        
 
     # Faire une classe NumberInputField ? (ce serait mieux mais bon programme et tout)
     large_radius = ft.TextField(label="Rayon du grand cercle", value=125)
@@ -50,7 +55,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
         if e.key == 'R':
-            recompute_spirograph_fourier()
+            recompute_spirograph_from_wav()
         if e.key == 'M':
             recompute_spirograph("") # Affiche le spirographe par défaut
 
