@@ -4,6 +4,7 @@ from audio.getter_new import read_wav
 from time import sleep
 from numpy import real, imag
 from random import randint
+from formule import create_svg_for
 
 max_spiros = 5
 
@@ -20,6 +21,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             float(resolution.value),
         )
         page.update()
+        create_svg_for(canvas.shapes, "a.svg", height= 1000, width= 1000, line_width= 2)
 
     def recompute_spirograph_from_wav():
         file = read_wav()
