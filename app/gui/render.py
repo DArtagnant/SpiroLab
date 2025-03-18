@@ -1,15 +1,7 @@
 import flet as ft
-import flet_audio_recorder as far
-from flet import canvas as cv
-
-from time import sleep
 
 from .bar import settings_bar
 from .state_provider import centered_canvas
-from .spirograph import render_spirographs_from_data
-from formule import fourier
-from audio import test_audio
-from scipy.fft import rfft
 
 def main(page: ft.Page):
     page.title = "Proof of Concept"

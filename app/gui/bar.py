@@ -1,6 +1,6 @@
 import flet as ft
 from .spirograph import render_spirograph
-from audio.getter_new import read_wav
+from audio.getter import read_wav
 from time import sleep
 from numpy import real, imag
 from random import randint

@@ -1,36 +1,44 @@
+import os
+import wave
 import numpy as np
-import matplotlib.pyplot as plt
-from importlib.resources import open_binary
-import scipy.io.wavfile as wav
-from scipy.fft import rfft, rfftfreq
- 
-# Partition list into chunks
-def partition_list(lst, size):
-    return [lst[i:i + size] for i in range(0, len(lst), size)]
 
-def test_audio():
-    """
-    Renvoie (data, sample_rate, channel_number)
-    """
-    file = wav.read(open_binary("static_data", "amogus.wav"))
-    return file[1], file[0], 1
+def input_sound():
+    pass
 
-# Récupère les données de l'audio
-def fourier():
-    SAMPLE_RATE = test_audio()[1]
-    amogus = test_audio()[0]
-    chunks = partition_list(amogus, 750)
-    '''
-    for i in range(100):
-        yf2 = rfft(chunks[i])
-        xf2 = rfftfreq(len(chunks[i]), 1 / 44100)
-        plt.subplot(10, 10, i+1)
-        plt.xscale("log")
-        plt.yscale("log")
-        plt.plot(xf2, np.abs(yf2), 'b', lw=0.1)
-    '''
-    yf2 = rfft(amogus)
-    return yf2
-    xf2 = rfftfreq(len(amogus), 1 / 44100)
-    plt.plot(xf2, np.abs(yf2), 'b', lw=0.1)
-    plt.show()
+def read_wav():
+    # TODO
+    # Commentaire temporaraire, quand l'input sera prêt
+    # app_temp_path = os.getenv("FLET_APP_STORAGE_TEMP")
+    # input_path = os.path.join(app_temp_path, "input.wav")
+
+    input_path = "static_data/amogus.wav"
+    data = []
+
+    with wave.open(input_path, "rb") as file:
+        nframes = file.getnframes()
+        sample_width = file.getsampwidth()
+
+        data = file.readframes(nframes)
+
+        if sample_width == 1:
+            np_dtype = np.uint8
+        elif sample_width == 2:
+            np_dtype = np.int16
+        elif sample_width == 4:
+            np_dtype = np.int32
+        else:
+            raise ValueError(f"Unsupported sample width: {sample_width}")
+
+        # Numpy array à partir des bytes
+        audio_array = np.frombuffer(data, dtype=np_dtype)
+
+        # Normalisation à la moyenne
+        if sample_width == 1:
+            audio_array = audio_array.astype(np.float32) - 128
+        elif sample_width == 2 or sample_width == 4:
+            audio_array = audio_array.astype(np.float32)
+
+        average = sum(audio_array) / len(audio_array)
+
+        float_array = audio_array / average
+        return np.array_split(float_array, len(float_array)//5)
