@@ -4,6 +4,9 @@ from formule.math import progressive_color, distance, calc_point, average_angle
 import numpy as np
 from collections import deque
 from math import pi, lcm
+from collections import namedtuple
+
+SpiroPoint = namedtuple("SpiroPoint", ("point", "circle_angle", "point_angle"))
 
 #TODO detecter lorsqu'on a fait un tour complet
 def spirograph(
@@ -15,42 +18,44 @@ def spirograph(
     interpolate_distance_max: float,
     nb_points: int,
 ):
-    print(f"Affichage d'un spiro à {nb_points} points")
     """Générateur de positions des points du spirographe"""
-    circle_angle2 = 0 # Angle du centre du petit cercle dans le grand cercle
-    point_angle2 = 0 # Angle du point au petit cercle
+    print(f"Affichage d'un spiro à {nb_points} points")
 
     point1 = None
-    point2 = None
+    point2 = SpiroPoint(None, 0, 0)
     colors = progressive_color(nb_points)
     for _ in range(nb_points):
         point1 = point2
-        circle_angle1 = circle_angle2
-        point_angle1 = point_angle2
 
-        circle_angle2 += large_angular_velocity
-        circle_angle2 %= 2*pi
-        point_angle2 += small_angular_velocity
-        point_angle2 %= 2*pi
-        point2 = calc_point(center, large_radius, small_radius, circle_angle2, point_angle2)
-        
+        point2 = SpiroPoint(*calc_point(
+            center,
+            large_radius,
+            small_radius,
+            (point2.circle_angle + large_angular_velocity) % (2 * pi),
+            (point2.point_angle + small_angular_velocity) % (2 * pi),
+        ))
+
         # on ignore la suite pour le premier point
-        if point1 is None: continue
+        if point1.point is None: continue
 
-        to_be_constructed = deque(((point1, circle_angle1, point_angle1), (point2, circle_angle2, point_angle2)))
+        to_be_constructed = deque((point1, point2))
 
         operations = 0
         while len(to_be_constructed) > 1 and operations < 10**4:
-            point1, circle_angle1, point_angle1 = to_be_constructed.popleft()
-            point2, circle_angle2, point_angle2 = to_be_constructed[0]
-            if distance(point1, point2) < interpolate_distance_max:
-                yield cv.Line(*point1, *point2, ft.Paint(next(colors)))
+            tbc_point1 = to_be_constructed.popleft()
+            tbc_point2 = to_be_constructed[0]
+            if distance(tbc_point1.point, tbc_point2.point) < interpolate_distance_max:
+                yield cv.Line(*point1.point, *point2.point, ft.Paint(next(colors)))
             else:
-                circle_angle12 = average_angle(circle_angle1, circle_angle2)
-                point_angle12 = average_angle(point_angle1, point_angle2)
-                point12 = calc_point(center, large_radius, small_radius, circle_angle12, point_angle12)
-                to_be_constructed.appendleft((point12, circle_angle12, point_angle12))
-                to_be_constructed.appendleft((point1, circle_angle1, point_angle1))
+                middle_point = SpiroPoint(*calc_point(
+                    center,
+                    large_radius,
+                    small_radius,
+                    average_angle(tbc_point1.circle_angle, tbc_point2.circle_angle),
+                    average_angle(tbc_point1.point_angle, tbc_point2.point_angle),
+                ))
+                to_be_constructed.appendleft(middle_point)
+                to_be_constructed.appendleft(tbc_point1)
             operations += 1
         if operations >= 10**4:
             # Afin d'éviter une boucle infinie qui mange toute la mémoire RAM
