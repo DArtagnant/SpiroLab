@@ -1,16 +1,24 @@
 import flet as ft
 from flet import canvas as cv
 from types import MethodType
+from itertools import chain
 
 def centered_canvas(page: ft.Page):
     cp = cv.Canvas([])
     cp.on_resize = _generate_auto_resize(cp)
     cp.state_current_width = page.width
     cp.state_current_height = page.height
-    cp.append = MethodType(_append, cp)
+    cp.add_spiro = MethodType(_add_spiro, cp)
+    cp.spiro_list = []
+    cp._Canvas__shapes = object()
+    cp._Canvas__shapes.__iter__ = MethodType(lambda e: chain(*e.spiro_list), cp)
     return cp
 
-def _append(canvas, shape):
+def _add_spiro(canvas):
+    canvas.spiro_list.append([])
+    return len(canvas.spiro_list) - 1
+
+def _append(canvas, index, shape):
     if isinstance(shape, cv.Circle):
         shape.state_absolute_x = shape.x
         shape.state_absolute_y = shape.y
@@ -29,7 +37,7 @@ def _append(canvas, shape):
         # TODO : logging + warn
         print(f"WARNING : unrecognised shape {shape}, position is not fixed for this shape")
 
-    canvas.shapes.append(shape)
+    canvas.spiro_list[index].append(shape)
 
 def _generate_auto_resize(canvas: cv.Canvas):
     # représente la taille la plus à jour à viser lors du changement de taille de fenêtre
