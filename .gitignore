@@ -173,4 +173,5 @@ cython_debug/
 # Custom
 storage/
 NSI-env/
+app/a.svg
 build/

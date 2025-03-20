@@ -1,17 +1,26 @@
 import os
 import wave
 import numpy as np
+from flet_audio_recorder import AudioRecorderStateChangeEvent, AudioRecorderState, AudioRecorder, AudioEncoder
 
-def input_sound():
-    pass
+app_temp_path = os.getenv("FLET_APP_STORAGE_TEMP")
+input_path = os.path.join(app_temp_path, "input.wav")
+print(app_temp_path, input_path)
+
+# Enregistement du son
+audio_rec = AudioRecorder(
+    audio_encoder=AudioEncoder.WAV,
+)
+
+def input_sound_start(e):
+    print("Enregistrement commencé")
+    audio_rec.start_recording(input_path)
+def input_sound_end(e):
+    print("Fin de l'enrgeistrement")
+    audio_rec.stop_recording()
+
 
 def read_wav():
-    # TODO
-    # Commentaire temporaraire, quand l'input sera prêt
-    # app_temp_path = os.getenv("FLET_APP_STORAGE_TEMP")
-    # input_path = os.path.join(app_temp_path, "input.wav")
-
-    input_path = "static_data/amogus.wav"
     data = []
 
     with wave.open(input_path, "rb") as file:

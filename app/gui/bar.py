@@ -1,12 +1,13 @@
 import flet as ft
 from .spirograph import render_spirograph
-from audio.getter import read_wav
+from audio.getter import input_sound_start, input_sound_end, read_wav, audio_rec
 from time import sleep
 from numpy import real, imag
 from random import randint
 from formule import create_svg_for
 
 max_spiros = 5
+
 
 def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     def recompute_spirograph(_):
@@ -54,6 +55,11 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
 
+    page.overlay.append(audio_rec)
+
+    input_button = ft.ElevatedButton(text="Enregistrer", on_click=input_sound_start)
+    stop_input_button = ft.ElevatedButton(text="Stop", on_click=input_sound_end)
+
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
         if e.key == 'R':
@@ -78,5 +84,9 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         ft.Column([
             resolution,
             b,
+        ]),
+        ft.Column([
+            input_button,
+            stop_input_button
         ])
     ])
