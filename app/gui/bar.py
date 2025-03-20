@@ -43,13 +43,11 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             )
             page.update()
         
+    large_radius = ft.TextField(label="Rayon du grand cercle", value='125')
+    small_radius = ft.TextField(label="Rayon du petit cercle", value='200')
 
-    # Faire une classe NumberInputField ? (ce serait mieux mais bon programme et tout)
-    large_radius = ft.TextField(label="Rayon du grand cercle", value=125)
-    small_radius = ft.TextField(label="Rayon du petit cercle", value=200)
-
-    large_frequency = ft.TextField(label="Fréquence du petit cercle", value=100)
-    small_frequency = ft.TextField(label="Fréquence du point", value=50)
+    large_frequency = ft.TextField(label="Fréquence du petit cercle", value='100')
+    small_frequency = ft.TextField(label="Fréquence du point", value='50')
 
     resolution = ft.TextField(label="Resolution", value=50)
 
@@ -70,7 +68,26 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     page.on_keyboard_event = on_keyboard
 
-    # recompute_spirograph(0) # Affiche le spirographe par défaut
+    def next_turn(_):
+        large_radius.value = float(large_radius.value) + 5
+        resolution.value = float(resolution.value) + 5
+
+        canvas.shapes = []
+        render_spirograph(
+            canvas,
+            (0,0),
+            float(large_radius.value),
+            float(small_radius.value),
+            int(large_frequency.value),
+            int(small_frequency.value),
+            float(resolution.value),
+        )
+        page.update()
+
+    next_turn_button = ft.ElevatedButton(
+        text="next turn",
+        on_click=next_turn
+    )
 
     return ft.Row([
         ft.Column([
@@ -87,6 +104,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         ]),
         ft.Column([
             input_button,
-            stop_input_button
+            stop_input_button,
+            next_turn_button,
         ])
     ])
