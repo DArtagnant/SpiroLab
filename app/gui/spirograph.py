@@ -5,6 +5,7 @@ import numpy as np
 from collections import deque
 from math import pi, lcm
 from collections import namedtuple
+from typing import Optional
 
 SpiroPoint = namedtuple("SpiroPoint", ("point", "circle_angle", "point_angle"))
 
@@ -17,10 +18,19 @@ def spirograph(
     small_angular_velocity: float,
     interpolate_distance_max: float,
     nb_points: int,
-    stroke_width: int = 5,
+    stroke_width: Optional[int] = None,
 ):
     """Générateur de positions des points du spirographe"""
     print(f"Affichage d'un spiro à {nb_points} points")
+
+    if stroke_width is None:
+        # On définit le stroke à partir du nombre de points, qui définit environ la complexité du spirographe
+        if nb_points >= 1000:
+            stroke_width = 2
+        elif nb_points >= 500:
+            stroke_width = 3
+        else:
+            stroke_width = 5
 
     point1 = None
     point2 = SpiroPoint(None, 0, 0)
