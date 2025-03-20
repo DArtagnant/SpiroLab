@@ -17,6 +17,7 @@ def spirograph(
     small_angular_velocity: float,
     interpolate_distance_max: float,
     nb_points: int,
+    stroke_width: int = 5,
 ):
     """Générateur de positions des points du spirographe"""
     print(f"Affichage d'un spiro à {nb_points} points")
@@ -45,7 +46,13 @@ def spirograph(
             tbc_point1 = to_be_constructed.popleft()
             tbc_point2 = to_be_constructed[0]
             if distance(tbc_point1.point, tbc_point2.point) < interpolate_distance_max:
-                yield cv.Line(*point1.point, *point2.point, ft.Paint(next(colors)))
+                yield cv.Line(*point1.point, *point2.point,
+                    ft.Paint(
+                        next(colors),
+                        stroke_width=stroke_width,
+                        stroke_cap=ft.StrokeCap.ROUND,
+                        stroke_join=ft.StrokeJoin.ROUND,
+                    ))
             else:
                 middle_point = SpiroPoint(*calc_point(
                     center,
