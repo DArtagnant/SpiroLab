@@ -12,7 +12,7 @@ def centered_canvas(page: ft.Page):
     cp.add_spiro = MethodType(_add_spiro, cp)
     cp._redraw_spiros = MethodType(_redraw_spiros, cp)
     cp.spiro_list = {}
-    cp.applied_shapes = []
+    cp._applied_shapes = []
     cp._Canvas__shapes = _generate_iterable_type(cp) # bypass name mangling
     return cp
 
@@ -25,13 +25,13 @@ def _add_spiro(canvas):
     return _add_shape
 
 def _generate_iterable_type(canvas):
-    def init(it, canvas):
+    def f_init(it, canvas):
         it.canvas = canvas
-    def iter(it):
-        return iter(it.canvas.applied_shapes)
+    def f_iter(it):
+        return iter(it.canvas._applied_shapes)
     T = type("It", (object,), {
-        '__iter__': iter,
-        '__init__': init,
+        '__init__': f_init,
+        '__iter__': f_iter,
     })
     return T(canvas)
 
@@ -61,7 +61,7 @@ def _generate_auto_resize(canvas: cv.Canvas):
     return auto_resize
 
 def _redraw_spiros(canvas, size=None):
-    new_applied_shapes = []
+    new__applied_shapes = []
     for spiro in canvas.spiro_list.values():
         for shape in spiro:
             if canvas.target_size != size:
@@ -77,8 +77,8 @@ def _redraw_spiros(canvas, size=None):
                 applied_shape.y1 = -shape.y1 + size[1] / 2
                 applied_shape.x2 = shape.x2 + size[0] / 2
                 applied_shape.y2 = -shape.y2 + size[1] / 2
-            new_applied_shapes.append(applied_shape)
-    canvas.applied_shapes = new_applied_shapes
-    print(len(canvas.applied_shapes))
+            new__applied_shapes.append(applied_shape)
+    canvas._applied_shapes = new__applied_shapes
+    print(len(canvas._applied_shapes))
     print([e for e in canvas._Canvas__shapes])
     canvas.update()
