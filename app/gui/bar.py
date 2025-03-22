@@ -78,8 +78,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     def on_keyboard(e: ft.KeyboardEvent):
         if e.key == 'R':
             recompute_spirograph_from_wav()
-        if e.key == 'M':
-            recompute_spirograph("") # Affiche le spirographe par défaut
+        if e.key == 'Enter':
+            recompute_spirograph('_')
 
 
     page.on_keyboard_event = on_keyboard
