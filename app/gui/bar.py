@@ -50,7 +50,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     large_frequency = ft.TextField(label="Fréquence du petit cercle", value='100')
     small_frequency = ft.TextField(label="Fréquence du point", value='50')
 
-    resolution = ft.TextField(label="Resolution", value=50)
+    resolution = ft.TextField(label="Resolution", value='50')
 
     b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
 
@@ -85,47 +85,9 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         )
         page.update()
 
-    def a(_):
-        r = Command(
-                indent=0, name='add', attrs={'to': canvas._Control__uid},
-                commands=[
-                    Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#000000","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '0.0', 'x2': '0.0', 'y1': '1000.0', 'y2': '1000.0'}, commands=[])],
-            )
-        print(r, r.commands[0].attrs)
-        page._Page__conn.send_commands(page._session_id, [r])
-
-    def fb(_):
-        BASE = """{
-        "action": "pageControlsBatch",
-        "payload": [
-            {
-            "action": "addPageControls",
-            "payload": {
-                "controls": [
-                    {
-                        "t": "line",
-                        "i": "_custom_0",
-                        "p": \"""" + str(canvas._Control__uid) + """\",
-                        "c": [],
-                        "paint": "{\\"color\\":\\"#ff0000\\",\\"stroke_cap\\":\\"round\\",\\"stroke_join\\":\\"round\\",\\"stroke_width\\":5}",
-                        "x1": "953.1762813164295",
-                        "x2": "947.730969890036",
-                        "y1": "254.08453834597498",
-                        "y2": "221.59536837149102"
-                    }
-                ],
-                "trimIDs": []
-            }
-            }
-        ]
-    }"""
-        print("BASE", BASE)
-        j = BASE
-        page._Page__conn._FletSocketServer__loop.call_soon_threadsafe(page._Page__conn._FletSocketServer__send_queue.put_nowait, j)
-
     next_turn_button = ft.ElevatedButton(
         text="next turn",
-        on_click=fb,
+        on_click=next_turn,
     )
 
     
