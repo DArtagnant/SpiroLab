@@ -70,20 +70,24 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     page.on_keyboard_event = on_keyboard
 
     def next_turn(_):
-        large_radius.value = float(large_radius.value) + 5
-        resolution.value = float(resolution.value) + 5
+        spiro_id = tuple(canvas.spiros.keys())[-1]
+        canvas.rotations[spiro_id] = canvas.rotations.get(spiro_id, 0) + 0.1
+        canvas.clear()
+        canvas.draw()
+        # large_radius.value = float(large_radius.value) + 5
+        # resolution.value = float(resolution.value) + 5
 
-        canvas.shapes = []
-        render_spirograph(
-            canvas,
-            (0,0),
-            float(large_radius.value),
-            float(small_radius.value),
-            int(large_frequency.value),
-            int(small_frequency.value),
-            float(resolution.value),
-        )
-        page.update()
+        # canvas.shapes = []
+        # render_spirograph(
+        #     canvas,
+        #     (0,0),
+        #     float(large_radius.value),
+        #     float(small_radius.value),
+        #     int(large_frequency.value),
+        #     int(small_frequency.value),
+        #     float(resolution.value),
+        # )
+        # page.update()
 
     next_turn_button = ft.ElevatedButton(
         text="next turn",

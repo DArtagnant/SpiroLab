@@ -87,7 +87,7 @@ def render_spirograph(
     small_frequency: int,
     interpolate_distance_max: float,
 ):
-    spiro_deque = canvas.new_spiro()
+    spiro_id, spiro_deque = canvas.new_spiro(center)
     for line in spirograph(
         center,
         large_radius,

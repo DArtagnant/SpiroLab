@@ -5,6 +5,7 @@ from itertools import chain
 from uuid import uuid1 as uuid
 from collections import deque, namedtuple
 from flet.core.protocol import Command
+from math import cos, sin
 
 SpiroLine = namedtuple("SpiroLine", ("p_from", "p_to", "color", "stroke_width"))
 
@@ -18,11 +19,18 @@ def centered_canvas(page: ft.Page):
     cc.new_spiro = MethodType(_new_spiro, cc)
     cc.draw = MethodType(_draw, cc)
     cc.clear = MethodType(_clear, cc)
+    cc.rotations = {}
+    cc.centers = {}
     cc.on_resize = _on_resize_generate(cc)
     return cc
 
 BASE_START = """{"action": "pageControlsBatch","payload": ["""
 BASE_END = """]}"""
+
+def _remove(canvas, spiro_id):
+    canvas.spiros.pop(spiro_id, None)
+    canvas.rotations.pop(spiro_id, None)
+    canvas.centers.pop(spiro_id, None)
 
 
 def _draw(canvas):
@@ -46,10 +54,25 @@ def _draw(canvas):
                 is_first_line_of_spiro = False
 
             # Calculs de la véritable position
-            x1 = line.p_from[0] + canvas.r_width / 2
-            y1 = -line.p_from[1] + canvas.r_height / 2
-            x2 = line.p_to[0] + canvas.r_width / 2
-            y2 = -line.p_to[1] + canvas.r_height / 2
+            
+            x1 = line.p_from[0]
+            y1 = line.p_from[1]
+            x2 = line.p_to[0]
+            y2 = line.p_to[1]
+
+            angle = canvas.rotations.get(spiro_id, None)
+            if angle is not None:
+                cx, cy = canvas.centers[spiro_id]
+                x1_p = ((x1 - cx) * cos(angle) - (y1 - cy) * sin(angle)) + cx
+                y1_p = ((x1 - cx) * sin(angle) + (y1 - cy) * cos(angle)) + cy
+                x2_p = ((x2 - cx) * cos(angle) - (y2 - cy) * sin(angle)) + cx
+                y2_p = ((x2 - cx) * sin(angle) + (y2 - cy) * cos(angle)) + cy
+                x1, y1, x2, y2 = x1_p, y1_p, x2_p, y2_p
+
+            x1 += canvas.r_width / 2
+            y1 = -y1 + canvas.r_height / 2
+            x2 += canvas.r_width / 2
+            y2 = -y2 + canvas.r_height / 2
             
             message += """{
                     "action": "addPageControls",
@@ -81,10 +104,11 @@ def _clear(canvas):
     canvas.ref_page._Page__conn.send_command(canvas.ref_page._session_id, Command(0, 'clean', [canvas.uid], {}))
 
 
-def _new_spiro(canvas):
+def _new_spiro(canvas, center):
     spiro_id = uuid()
     canvas.spiros[spiro_id] = deque(())
-    return canvas.spiros[spiro_id]
+    canvas.centers[spiro_id] = center
+    return spiro_id, canvas.spiros[spiro_id]
 
 def _on_resize_generate(canvas):
     def on_resize(event):
