@@ -17,6 +17,7 @@ def centered_canvas(page: ft.Page):
     cc.spiros = {}
     cc.new_spiro = MethodType(_new_spiro, cc)
     cc.on_resize = _resize_handler(cc)
+    #cc.build_update_commands = MethodType(_build_update_commands, cc)
     return cc
 
 def _get_children(canvas):
@@ -35,6 +36,20 @@ def _get_children(canvas):
                     shape.paint
                 )
     #return chain(*canvas.spiros.values())
+
+
+def _build_update_commands(
+        canvas, index, commands, added_controls, removed_controls, isolated: bool = False
+    ):
+    update_cmd = canvas._build_command(update=True)
+    if len(update_cmd.attrs) > 0:
+        update_cmd.name = "set"
+        commands.append(update_cmd)
+    if isolated: return
+    # Pour clean
+    index['page']._send_command("clean", [canvas.uid])
+    print("called", index['page'])
+
 
 def _clean(canvas):
     super(cv.Canvas, canvas).clean()

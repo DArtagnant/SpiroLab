@@ -5,6 +5,7 @@ from time import sleep
 from numpy import real, imag
 from random import randint
 from formule import create_svg_for
+from flet.core.protocol import Command
 
 max_spiros = 5
 
@@ -56,7 +57,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     page.overlay.append(audio_rec)
 
     input_button = ft.ElevatedButton(text="Enregistrer", on_click=input_sound_start)
-    stop_input_button = ft.ElevatedButton(text="Stop", on_click=input_sound_end)
+    stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {})))
 
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
@@ -84,10 +85,62 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         )
         page.update()
 
+    def a(_):
+        r = Command(
+                indent=0, name='add', attrs={'to': canvas._Control__uid},
+                commands=[
+                    Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#000000","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '0.0', 'x2': '0.0', 'y1': '1000.0', 'y2': '1000.0'}, commands=[])],
+            )
+        print(r, r.commands[0].attrs)
+        page._Page__conn.send_commands(page._session_id, [r])
+
+    def fb(_):
+        BASE = """{
+        "action": "pageControlsBatch",
+        "payload": [
+            {
+            "action": "addPageControls",
+            "payload": {
+                "controls": [
+                    {
+                        "t": "line",
+                        "i": "_custom_0",
+                        "p": \"""" + str(canvas._Control__uid) + """\",
+                        "c": [],
+                        "paint": "{\\"color\\":\\"#ff0000\\",\\"stroke_cap\\":\\"round\\",\\"stroke_join\\":\\"round\\",\\"stroke_width\\":5}",
+                        "x1": "953.1762813164295",
+                        "x2": "947.730969890036",
+                        "y1": "254.08453834597498",
+                        "y2": "221.59536837149102"
+                    }
+                ],
+                "trimIDs": []
+            }
+            }
+        ]
+    }"""
+        print("BASE", BASE)
+        j = BASE
+        page._Page__conn._FletSocketServer__loop.call_soon_threadsafe(page._Page__conn._FletSocketServer__send_queue.put_nowait, j)
+
     next_turn_button = ft.ElevatedButton(
         text="next turn",
-        on_click=next_turn
+        on_click=fb,
     )
+
+    
+
+    # clean : page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {}))
+
+    # Exemples :
+    """
+    add [] {'to': '_17', 'at': '84'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#00fff7","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '641.6697576615708', 'x2': '672.2017358014425', 'y1': '578.3384275558999', 'y2': '579.7716054927121'}, commands=[])]
+add [] {'to': '_17', 'at': '85'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#00d9ff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '672.2017358014425', 'x2': '703.0102843352246', 'y1': '579.7716054927121', 'y2': '577.7264241133312'}, commands=[])]
+add [] {'to': '_17', 'at': '86'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#00abff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '703.0102843352246', 'x2': '733.6791823335403', 'y1': '577.7264241133312', 'y2': '572.1737339267407'}, commands=[])]
+add [] {'to': '_17', 'at': '87'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#007eff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '733.6791823335403', 'x2': '763.7904182641198', 'y1': '572.1737339267407', 'y2': '563.1354488643242'}, commands=[])]
+add [] {'to': '_17', 'at': '88'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#0050ff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '763.7904182641198', 'x2': '792.9305231718591', 'y1': '563.1354488643242', 'y2': '550.6844597955899'}, commands=[])]
+    """
+
 
     return ft.Row([
         ft.Column([
