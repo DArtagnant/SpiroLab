@@ -174,5 +174,7 @@ cython_debug/
 storage/
 NSI-env/
 **/a.svg
+**/a.json
+**/a.wav
 build/
 test.json

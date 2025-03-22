@@ -64,6 +64,16 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     export_button = ft.ElevatedButton(text="Exporter un spirographe", on_click=export_spiro)
 
+    def import_audio(e: ft.FilePickerResultEvent):
+        if e.files:
+            file = e.files[0]
+            print(file)
+
+    import_audio_dialog = ft.FilePicker(on_result=import_audio)
+    page.overlay.append(import_audio_dialog)
+
+    import_audio_button = ft.ElevatedButton(text="Importer un audio", on_click=lambda _: import_audio_dialog.pick_files(allow_multiple=False, dialog_title="Choisir un fichier audio WAV", allowed_extensions=["wav"], file_type=ft.FilePickerFileType.CUSTOM))
+
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
         if e.key == 'R':
@@ -99,20 +109,6 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         on_click=next_turn,
     )
 
-    
-
-    # clean : page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {}))
-
-    # Exemples :
-    """
-    add [] {'to': '_17', 'at': '84'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#00fff7","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '641.6697576615708', 'x2': '672.2017358014425', 'y1': '578.3384275558999', 'y2': '579.7716054927121'}, commands=[])]
-add [] {'to': '_17', 'at': '85'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#00d9ff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '672.2017358014425', 'x2': '703.0102843352246', 'y1': '579.7716054927121', 'y2': '577.7264241133312'}, commands=[])]
-add [] {'to': '_17', 'at': '86'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#00abff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '703.0102843352246', 'x2': '733.6791823335403', 'y1': '577.7264241133312', 'y2': '572.1737339267407'}, commands=[])]
-add [] {'to': '_17', 'at': '87'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#007eff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '733.6791823335403', 'x2': '763.7904182641198', 'y1': '572.1737339267407', 'y2': '563.1354488643242'}, commands=[])]
-add [] {'to': '_17', 'at': '88'} [Command(indent=0, name=None, values=['line'], attrs={'paint': '{"color":"#0050ff","stroke_cap":"round","stroke_join":"round","stroke_width":5}', 'x1': '763.7904182641198', 'x2': '792.9305231718591', 'y1': '563.1354488643242', 'y2': '550.6844597955899'}, commands=[])]
-    """
-
-
     return ft.Row([
         ft.Column([
             large_radius,
@@ -131,5 +127,6 @@ add [] {'to': '_17', 'at': '88'} [Command(indent=0, name=None, values=['line'], 
             stop_input_button,
             next_turn_button,
             export_button,
+            import_audio_button,
         ])
     ])
