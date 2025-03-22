@@ -60,7 +60,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     def export_spiro(_):
         spiro_id = tuple(canvas.spiros.keys())[-1]
-        create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], "/home/thomas/Programmation/projet-NSI/a.svg")
+        create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], "/home/thomas/Programmation/projet-NSI/a.svg", angle=canvas.rotations.get(spiro_id, None))
 
     export_button = ft.ElevatedButton(text="Exporter un spirographe", on_click=export_spiro)
 
