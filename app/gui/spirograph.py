@@ -87,7 +87,7 @@ def render_spirograph(
     small_frequency: int,
     interpolate_distance_max: float,
 ):
-    spiro_add = canvas.add_spiro()
+    spiro_deque = canvas.new_spiro()
     for line in spirograph(
         center,
         large_radius,
@@ -97,7 +97,7 @@ def render_spirograph(
         interpolate_distance_max,
         lcm(large_frequency, small_frequency) + 1, # Permet de limiter le nombre de calls en donnant le nombre de points exact du spirographe
     ):
-        spiro_add(line)
+        spiro_deque.append(line)
 
 def render_spirographs_from_data(cp, data):
     spiro = tuple(map(lambda x: np.real(x)/50, data[7:13]))
