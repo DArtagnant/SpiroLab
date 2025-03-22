@@ -23,7 +23,6 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             float(resolution.value),
         )
         page.update()
-        create_svg_for(canvas.shapes, "a.svg", height= 1000, width= 1000, line_width= 2)
 
     def recompute_spirograph_from_wav():
         file = read_wav()
@@ -58,6 +57,12 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     input_button = ft.ElevatedButton(text="Enregistrer", on_click=input_sound_start)
     stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {})))
+
+    def export_spiro(_):
+        spiro_id = tuple(canvas.spiros.keys())[-1]
+        create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], "/home/thomas/Programmation/projet-NSI/a.svg")
+
+    export_button = ft.ElevatedButton(text="Exporter un spirographe", on_click=export_spiro)
 
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
@@ -125,5 +130,6 @@ add [] {'to': '_17', 'at': '88'} [Command(indent=0, name=None, values=['line'], 
             input_button,
             stop_input_button,
             next_turn_button,
+            export_button,
         ])
     ])

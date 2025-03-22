@@ -173,6 +173,6 @@ cython_debug/
 # Custom
 storage/
 NSI-env/
-app/a.svg
+**/a.svg
 build/
 test.json
