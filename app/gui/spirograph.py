@@ -6,6 +6,7 @@ from collections import deque
 from math import pi, lcm
 from collections import namedtuple
 from typing import Optional
+from .centered_canvas import SpiroLine
 
 SpiroPoint = namedtuple("SpiroPoint", ("point", "circle_angle", "point_angle"))
 
@@ -56,13 +57,12 @@ def spirograph(
             tbc_point1 = to_be_constructed.popleft()
             tbc_point2 = to_be_constructed[0]
             if distance(tbc_point1.point, tbc_point2.point) < interpolate_distance_max:
-                yield cv.Line(*point1.point, *point2.point,
-                    ft.Paint(
-                        next(colors),
-                        stroke_width=stroke_width,
-                        stroke_cap=ft.StrokeCap.ROUND,
-                        stroke_join=ft.StrokeJoin.ROUND,
-                    ))
+                yield SpiroLine(
+                    point1.point,
+                    point2.point,
+                    next(colors),
+                    stroke_width
+                )
             else:
                 middle_point = SpiroPoint(*calc_point(
                     center,
@@ -87,6 +87,7 @@ def render_spirograph(
     small_frequency: int,
     interpolate_distance_max: float,
 ):
+    spiro_id, spiro_deque = canvas.new_spiro(center)
     for line in spirograph(
         center,
         large_radius,
@@ -96,7 +97,9 @@ def render_spirograph(
         interpolate_distance_max,
         lcm(large_frequency, small_frequency) + 1, # Permet de limiter le nombre de calls en donnant le nombre de points exact du spirographe
     ):
-        canvas.append(line)
+        spiro_deque.append(line)
+    canvas.clear()
+    canvas.draw()
 
 def render_spirographs_from_data(cp, data):
     spiro = tuple(map(lambda x: np.real(x)/50, data[7:13]))

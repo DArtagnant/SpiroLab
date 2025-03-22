@@ -173,5 +173,8 @@ cython_debug/
 # Custom
 storage/
 NSI-env/
-app/a.svg
+**/a.svg
+**/a.json
+**/a.wav
 build/
+test.json

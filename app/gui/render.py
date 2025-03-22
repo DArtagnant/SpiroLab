@@ -1,7 +1,7 @@
 import flet as ft
 
 from .bar import settings_bar
-from .state_provider import centered_canvas
+from .centered_canvas import centered_canvas
 
 def main(page: ft.Page):
     page.title = "Proof of Concept"

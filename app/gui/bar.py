@@ -5,6 +5,7 @@ from time import sleep
 from numpy import real, imag
 from random import randint
 from formule import create_svg_for
+from flet.core.protocol import Command
 
 max_spiros = 5
 
@@ -22,7 +23,6 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             float(resolution.value),
         )
         page.update()
-        create_svg_for(canvas.shapes, "a.svg", height= 1000, width= 1000, line_width= 2)
 
     def recompute_spirograph_from_wav():
         file = read_wav()
@@ -43,22 +43,36 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             )
             page.update()
         
+    large_radius = ft.TextField(label="Rayon du grand cercle", value='125')
+    small_radius = ft.TextField(label="Rayon du petit cercle", value='200')
 
-    # Faire une classe NumberInputField ? (ce serait mieux mais bon programme et tout)
-    large_radius = ft.TextField(label="Rayon du grand cercle", value=125)
-    small_radius = ft.TextField(label="Rayon du petit cercle", value=200)
+    large_frequency = ft.TextField(label="Fréquence du petit cercle", value='100')
+    small_frequency = ft.TextField(label="Fréquence du point", value='50')
 
-    large_frequency = ft.TextField(label="Fréquence du petit cercle", value=100)
-    small_frequency = ft.TextField(label="Fréquence du point", value=50)
-
-    resolution = ft.TextField(label="Resolution", value=50)
+    resolution = ft.TextField(label="Resolution", value='50')
 
     b = ft.ElevatedButton(text="Afficher", on_click=recompute_spirograph)
 
     page.overlay.append(audio_rec)
 
     input_button = ft.ElevatedButton(text="Enregistrer", on_click=input_sound_start)
-    stop_input_button = ft.ElevatedButton(text="Stop", on_click=input_sound_end)
+    stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {})))
+
+    def export_spiro(_):
+        spiro_id = tuple(canvas.spiros.keys())[-1]
+        create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], "/home/thomas/Programmation/projet-NSI/a.svg", angle=canvas.rotations.get(spiro_id, None))
+
+    export_button = ft.ElevatedButton(text="Exporter un spirographe", on_click=export_spiro)
+
+    def import_audio(e: ft.FilePickerResultEvent):
+        if e.files:
+            file = e.files[0]
+            print(file)
+
+    import_audio_dialog = ft.FilePicker(on_result=import_audio)
+    page.overlay.append(import_audio_dialog)
+
+    import_audio_button = ft.ElevatedButton(text="Importer un audio", on_click=lambda _: import_audio_dialog.pick_files(allow_multiple=False, dialog_title="Choisir un fichier audio WAV", allowed_extensions=["wav"], file_type=ft.FilePickerFileType.CUSTOM))
 
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
@@ -70,7 +84,30 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     page.on_keyboard_event = on_keyboard
 
-    # recompute_spirograph(0) # Affiche le spirographe par défaut
+    def next_turn(_):
+        spiro_id = tuple(canvas.spiros.keys())[-1]
+        canvas.rotations[spiro_id] = canvas.rotations.get(spiro_id, 0) + 0.1
+        canvas.clear()
+        canvas.draw()
+        # large_radius.value = float(large_radius.value) + 5
+        # resolution.value = float(resolution.value) + 5
+
+        # canvas.shapes = []
+        # render_spirograph(
+        #     canvas,
+        #     (0,0),
+        #     float(large_radius.value),
+        #     float(small_radius.value),
+        #     int(large_frequency.value),
+        #     int(small_frequency.value),
+        #     float(resolution.value),
+        # )
+        # page.update()
+
+    next_turn_button = ft.ElevatedButton(
+        text="next turn",
+        on_click=next_turn,
+    )
 
     return ft.Row([
         ft.Column([
@@ -87,6 +124,9 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         ]),
         ft.Column([
             input_button,
-            stop_input_button
+            stop_input_button,
+            next_turn_button,
+            export_button,
+            import_audio_button,
         ])
     ])
