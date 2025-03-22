@@ -1,24 +1,24 @@
 import flet as ft
+from time import sleep
 
-from .bar import settings_bar
+from .home_page import home_page
 from .centered_canvas import centered_canvas
 
 def main(page: ft.Page):
-    page.title = "Proof of Concept"
+    page.title = "SpiroLab"
 
-    cp = centered_canvas(page)
-    appbar = settings_bar(page, cp)
+    # cp = centered_canvas(page)
+    home_page(page)
+    # page.add(
+    #     # ft.Container(
+    #     #     cp,
+    #     #     border_radius=5,
+    #     #     width=float("inf"),
+    #     #     expand=True,
+    #     # ),
+    # )
 
-    page.add(
-        appbar,
-        ft.Container(
-            cp,
-            border_radius=5,
-            width=float("inf"),
-            expand=True,
-        ),
-    )
-    print("called")
+
 
 def render():
     ft.app(main)
