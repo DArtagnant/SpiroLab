@@ -1,11 +1,12 @@
 import flet as ft
 from flet import canvas as cv
-from formule.math import progressive_color, distance, calc_point, average_angle
+from formule.math import distance, calc_point, average_angle
+from formule.colors_creator import progressive_color_arc_en_ciel
 import numpy as np
 from collections import deque
 from math import pi, lcm
 from collections import namedtuple
-from typing import Optional
+from typing import Optional, Generator
 from .centered_canvas import SpiroLine
 
 SpiroPoint = namedtuple("SpiroPoint", ("point", "circle_angle", "point_angle"))
@@ -20,6 +21,7 @@ def spirograph(
     interpolate_distance_max: float,
     nb_points: int,
     stroke_width: Optional[int] = None,
+    iter_color: Optional[Generator[str, None, None]] = None,
 ):
     """Générateur de positions des points du spirographe"""
     print(f"Affichage d'un spiro à {nb_points} points")
@@ -35,7 +37,10 @@ def spirograph(
 
     point1 = None
     point2 = SpiroPoint(None, 0, 0)
-    colors = progressive_color(nb_points)
+    if iter_color is None:
+        colors = progressive_color_arc_en_ciel(nb_points)
+    else:
+        colors = iter_color(nb_points)
     for _ in range(nb_points):
         point1 = point2
 
@@ -86,6 +91,8 @@ def render_spirograph(
     large_frequency: int,
     small_frequency: int,
     interpolate_distance_max: float,
+    stroke_width: Optional[int] = None,
+    iter_color: Optional[Generator[str, None, None]] = None,
 ):
     spiro_id, spiro_deque = canvas.new_spiro(center)
     for line in spirograph(
@@ -96,10 +103,13 @@ def render_spirograph(
         2*pi / small_frequency,
         interpolate_distance_max,
         lcm(large_frequency, small_frequency) + 1, # Permet de limiter le nombre de calls en donnant le nombre de points exact du spirographe
+        stroke_width,
+        iter_color,
     ):
         spiro_deque.append(line)
     canvas.clear()
     canvas.draw()
+    return spiro_id
 
 def render_spirographs_from_data(cp, data):
     spiro = tuple(map(lambda x: np.real(x)/50, data[7:13]))
