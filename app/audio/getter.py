@@ -16,7 +16,7 @@ def input_sound_start(e):
     print("Enregistrement commencé")
     audio_rec.start_recording(input_path)
 def input_sound_end(e):
-    print("Fin de l'enrgeistrement")
+    print("Fin de l'enregistrement")
     audio_rec.stop_recording()
 
 
