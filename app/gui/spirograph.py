@@ -11,7 +11,6 @@ from .centered_canvas import SpiroLine
 
 SpiroPoint = namedtuple("SpiroPoint", ("point", "circle_angle", "point_angle"))
 
-#TODO detecter lorsqu'on a fait un tour complet
 def spirograph(
     center: tuple[float, float],
     large_radius: float, 

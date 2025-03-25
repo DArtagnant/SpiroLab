@@ -46,17 +46,13 @@ def read_wav(path):
 
         average = sum(audio_array) / len(audio_array)
 
-        # Normalisation (préalable) à la moyenne : ne change rien à l'output final car juste un scaling, mais TODO pour retirer et vérifier que ça fonctionne comme prévu
-        float_array = audio_array / average
-
-
         # Shuffle pour éviter la bizarre behaviour du début
         # TODO++
-        np.random.shuffle(float_array)
+        # np.random.shuffle(audio_array)
         # Division du signal en les 5 parties, une pour chaque paramètre
-        nb_paquets = len(float_array)//5
+        nb_paquets = len(audio_array)//5
 
-        paquets = np.array_split(float_array[0:5*nb_paquets], nb_paquets) # Paquets de 5 valeurs, avec fix pour avoir exactement un multiple de 5 valeurs
+        paquets = np.array_split(audio_array[0:5*nb_paquets], nb_paquets) # Paquets de 5 valeurs, avec fix pour avoir exactement un multiple de 5 valeurs
         arrays = np.column_stack(paquets)
 
         return arrays
