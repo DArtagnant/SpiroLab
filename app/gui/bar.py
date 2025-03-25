@@ -7,7 +7,7 @@ from formule import create_svg_for
 from flet.core.protocol import Command
 from formule.normalization import normalize_around
 
-max_spiros = 5
+MAX_SPIROS_ON_SCREEN = 5
 
 
 def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
@@ -30,12 +30,21 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
         large_radii = normalize_around(arrays[0], 100, 70)
         small_radii = normalize_around(arrays[1], 70, 50)
-        large_frequencies = normalize_around(arrays[2], 40, 30)
-        small_frequencies = normalize_around(arrays[3], 40, 30) # On inverse pour ne pas avoir quasi les mêmes valeurs
-        resolution = normalize_around(arrays[4], 70, 15) # TODO : vérifier que ces valeurs ne sont pas débiles
+        large_frequencies = normalize_around(arrays[2], 45, 40).astype(int) # On s'assure de n'avoir que des entiers dans la liste
+        small_frequencies = normalize_around(arrays[3], 35, 30).astype(int)
+        resolution = normalize_around(arrays[4], 35, 15) # TODO : vérifier que ces valeurs ne sont pas débiles
 
+        current_nb_spiros = 0
         for i in range(len(large_radii)):
-            if i%max_spiros == 0:
+            # Si le spirographe affiché n'est pas suffisemment différent du dernier, on passe
+            # Permet de ne jamais avoir deux spirographes presque identiques d'affilée
+            if (i != 0 and
+                abs(large_frequencies[i] - large_frequencies[i-1]) <= 4 and
+                abs(small_frequencies[i] - small_frequencies[i-1]) <= 4
+            ):
+                continue
+
+            if current_nb_spiros%MAX_SPIROS_ON_SCREEN == 0:
                 canvas.remove_all()
 
             render_spirograph(
@@ -48,13 +57,15 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
                 int(small_frequencies[i]),
                 resolution[i]
             )
-            # sleep(1)
+
+            sleep(0.5)
             canvas.draw_once()
+            current_nb_spiros = (current_nb_spiros + 1)%MAX_SPIROS_ON_SCREEN
         
     large_radius = ft.TextField(label="Rayon du grand cercle", value='125')
     small_radius = ft.TextField(label="Rayon du petit cercle", value='200')
 
-    large_frequency = ft.TextField(label="Fréquence du petit cercle", value='100')
+    large_frequency = ft.TextField(label="Fréquence du petit cercle", value='75')
     small_frequency = ft.TextField(label="Fréquence du point", value='50')
 
     resolution = ft.TextField(label="Resolution", value='50')
@@ -67,9 +78,10 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     # stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {})))
     stop_input_button = ft.ElevatedButton(text="Stop", on_click=input_sound_end)
 
+    # TODO : Mettre le bon path -> voir le dossier temp dans getter.py ?
     def export_spiro(_):
         spiro_id = tuple(canvas.spiros.keys())[-1]
-        create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], "/home/thomas/Programmation/projet-NSI/a.svg", angle=canvas.rotations.get(spiro_id, None))
+        # create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], "/home/thomas/Programmation/projet-NSI/a.svg", angle=canvas.rotations.get(spiro_id, None))
 
     export_button = ft.ElevatedButton(text="Exporter un spirographe", on_click=export_spiro)
 
@@ -86,9 +98,11 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
         if e.key == 'R':
+            canvas.remove_all()
             compute_spirographs_from_wav(input_path) # TODO : faire un bouton pour afficher les spiros de l'enregistrement
         if e.key == 'Enter':
-            recompute_spirograph('_')
+            canvas.remove_all()
+            recompute_spirograph("_")
 
 
     page.on_keyboard_event = on_keyboard

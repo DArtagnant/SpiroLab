@@ -10,7 +10,7 @@ def main(page: ft.Page):
 
     cp = centered_canvas(page)
     bar = settings_bar(page, cp)
-    # home_page(page) : TODO, fix le passage de la home_page au reste
+    # home_page(page) # TODO, fix le passage de la home_page au reste
     page.add(
         bar,
         ft.Container(
