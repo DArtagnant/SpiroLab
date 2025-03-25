@@ -2,10 +2,10 @@ import flet as ft
 from .spirograph import render_spirograph
 from audio.getter import input_sound_start, input_sound_end, read_wav, audio_rec
 from time import sleep
-from numpy import real, imag
 from random import randint
 from formule import create_svg_for
 from flet.core.protocol import Command
+from formule.normalization import normalize_around
 
 max_spiros = 5
 
@@ -25,23 +25,30 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         page.update()
 
     def recompute_spirograph_from_wav():
-        file = read_wav()
-        print(len(file))
-        for i in range(len(file)):
+        arrays = read_wav()
+
+        large_radii = normalize_around(arrays[0], 100, 70)
+        small_radii = normalize_around(arrays[1], 70, 50)
+        large_frequencies = normalize_around(arrays[2], 40, 30)
+        small_frequencies = normalize_around(arrays[3], 40, 30) # On inverse pour ne pas avoir quasi les mêmes valeurs
+        resolution = normalize_around(arrays[4], 70, 15) # TODO : vérifier que ces valeurs ne sont pas débiles
+
+        for i in range(len(large_radii)):
             if i%max_spiros == 0:
-                canvas.shapes = []
-            data = file[i]
-            # TODO : fix les valeurs de "normalisation" un peu hasardeuses
+                canvas.remove_all()
+
             render_spirograph(
                 canvas,
-                (randint(-400, 400), randint(-200, 200)),
-                abs(data[0])*3 + 5, 
-                abs(data[1])*3 + 5, 
-                int(data[2])%50 + 1,
-                int(data[3])%50 + 1, 
-                abs(float(data[4]))/10 + 40 # TODO : plus clean : Empêche la précision d'être trop grande ou petite 
+                (randint(-400, 400), randint(-200, 200)), # Position
+
+                large_radii[i],
+                small_radii[i],
+                int(large_frequencies[i]),
+                int(small_frequencies[i]),
+                resolution[i]
             )
-            page.update()
+            # sleep(1)
+            canvas.draw_once()
         
     large_radius = ft.TextField(label="Rayon du grand cercle", value='125')
     small_radius = ft.TextField(label="Rayon du petit cercle", value='200')
@@ -56,7 +63,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     page.overlay.append(audio_rec)
 
     input_button = ft.ElevatedButton(text="Enregistrer", on_click=input_sound_start)
-    stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {})))
+    # stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {})))
+    stop_input_button = ft.ElevatedButton(text="Stop", on_click=input_sound_end)
 
     def export_spiro(_):
         spiro_id = tuple(canvas.spiros.keys())[-1]

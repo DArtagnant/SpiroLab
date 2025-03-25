@@ -5,7 +5,6 @@ from flet_audio_recorder import AudioRecorderStateChangeEvent, AudioRecorderStat
 
 app_temp_path = os.getenv("FLET_APP_STORAGE_TEMP")
 input_path = os.path.join(app_temp_path, "input.wav")
-print(app_temp_path, input_path)
 
 # Enregistement du son
 audio_rec = AudioRecorder(
@@ -41,7 +40,6 @@ def read_wav():
         # Numpy array à partir des bytes
         audio_array = np.frombuffer(data, dtype=np_dtype)
 
-        # Normalisation à la moyenne
         if sample_width == 1:
             audio_array = audio_array.astype(np.float32) - 128
         elif sample_width == 2 or sample_width == 4:
@@ -49,5 +47,17 @@ def read_wav():
 
         average = sum(audio_array) / len(audio_array)
 
+        # Normalisation (préalable) à la moyenne : ne change rien à l'output final car juste un scaling, mais TODO pour retirer et vérifier que ça fonctionne comme prévu
         float_array = audio_array / average
-        return np.array_split(float_array, len(float_array)//5)
+
+
+        # Shuffle pour éviter la bizarre behaviour du début
+        # TODO++
+        np.random.shuffle(float_array)
+        # Division du signal en les 5 parties, une pour chaque paramètre
+        nb_paquets = len(float_array)//5
+
+        paquets = np.array_split(float_array[0:5*nb_paquets], nb_paquets) # Paquets de 5 valeurs, avec fix pour avoir exactement un multiple de 5 valeurs
+        arrays = np.column_stack(paquets)
+
+        return arrays
