@@ -1,6 +1,6 @@
 import flet as ft
 from .spirograph import render_spirograph
-from audio.getter import input_sound_start, input_sound_end, read_wav, audio_rec
+from audio.getter import input_sound_start, input_sound_end, read_wav, audio_rec, input_path
 from time import sleep
 from random import randint
 from formule import create_svg_for
@@ -24,8 +24,9 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         )
         page.update()
 
-    def recompute_spirograph_from_wav():
-        arrays = read_wav()
+    def compute_spirographs_from_wav(path):
+        # TODO : empêcher cette fonction de continuer à s'éxécuter quand on commence à faire autre chose, type afficher un autre spiro
+        arrays = read_wav(path)
 
         large_radii = normalize_around(arrays[0], 100, 70)
         small_radii = normalize_around(arrays[1], 70, 50)
@@ -39,7 +40,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
             render_spirograph(
                 canvas,
-                (randint(-400, 400), randint(-200, 200)), # Position
+                (randint(-400, 400), randint(-200, 200)), # Position aléatoire
 
                 large_radii[i],
                 small_radii[i],
@@ -74,8 +75,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     def import_audio(e: ft.FilePickerResultEvent):
         if e.files:
-            file = e.files[0]
-            print(file)
+            file = e.files[0].path
+            compute_spirographs_from_wav(file)
 
     import_audio_dialog = ft.FilePicker(on_result=import_audio)
     page.overlay.append(import_audio_dialog)
@@ -85,7 +86,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     # Automatisation de la génération du spirographe à chaque pression de la touche 'Enter'
     def on_keyboard(e: ft.KeyboardEvent):
         if e.key == 'R':
-            recompute_spirograph_from_wav()
+            compute_spirographs_from_wav(input_path) # TODO : faire un bouton pour afficher les spiros de l'enregistrement
         if e.key == 'Enter':
             recompute_spirograph('_')
 

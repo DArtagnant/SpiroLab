@@ -18,11 +18,10 @@ def input_sound_end(e):
     print("Fin de l'enregistrement")
     audio_rec.stop_recording()
 
-
-def read_wav():
+def read_wav(path):
     data = []
 
-    with wave.open(input_path, "rb") as file:
+    with wave.open(path, "rb") as file:
         nframes = file.getnframes()
         sample_width = file.getsampwidth()
 
