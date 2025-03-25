@@ -1,5 +1,5 @@
 #!/usr/bin/python3
+import flet as ft
+from gui.render import main
 
-import gui
-
-gui.render()
+ft.app(target=main, assets_dir="static_data")

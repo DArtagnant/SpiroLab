@@ -8,6 +8,10 @@ from .centered_canvas import centered_canvas
 def main(page: ft.Page):
     page.title = "SpiroLab"
 
+    page.fonts = {
+        "monospace": "./static_data/Monospace.ttf"
+    }
+
     cp = centered_canvas(page)
     bar = settings_bar(page, cp)
     # home_page(page) # TODO, fix le passage de la home_page au reste
@@ -21,8 +25,3 @@ def main(page: ft.Page):
         ),
     )
     
-
-
-
-def render():
-    ft.app(main)
