@@ -23,6 +23,7 @@ def centered_canvas(page: ft.Page):
     cc.rotations = {}
     cc.centers = {}
     cc.on_resize = _on_resize_generate(cc)
+    cc.remove_all = MethodType(_remove_all, cc)
     return cc
 
 BASE_START = """{"action": "pageControlsBatch","payload": ["""
@@ -189,3 +190,9 @@ def _on_resize_generate(canvas):
         canvas.clear()
         canvas.draw()
     return on_resize
+
+
+def _remove_all(canvas):
+    canvas.spiros.clear()
+    canvas.rotations.clear()
+    canvas.centers.clear()
