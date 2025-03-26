@@ -16,7 +16,7 @@ LOGO ="""
 """
 
 
-def home_page(page: ft.Page):
+def home_page(page: ft.Page, spiro_should_turn: bool = False):
 
     logo_text = ft.Text(
         spans=[
@@ -105,13 +105,14 @@ def home_page(page: ft.Page):
         colors_pastel2 = ("#FEF8DD", "#FFE7C7", "#F7D8BA")
         s1 = render_spirograph(canvas, (-100, -100), 200, 75, 10, 50, 10, 2, lambda nb_points: cycle(smooth_color_generator(colors_pastel1, int(nb_points/2), easing=ease_in_out_cubic)))
         s2 = render_spirograph(canvas, (700, -600), 350, 100, 10, 30, 10, 2, lambda nb_points: cycle(smooth_color_generator(colors_pastel2, int(nb_points/2))))
-        canvas.rotations[s1] = 0
-        canvas.rotations[s2] = 0
-        while True:
-            canvas.rotations[s1] += 0.005
-            canvas.rotations[s2] += 0.003
-            canvas.draw_once()
-            sleep(0.2)
+        if spiro_should_turn:
+            canvas.rotations[s1] = 0
+            canvas.rotations[s2] = 0
+            while True:
+                canvas.rotations[s1] += 0.005
+                canvas.rotations[s2] += 0.003
+                canvas.draw_once()
+                sleep(0.2)
     
     def animate_spiro_show():
         nonlocal canvas_container

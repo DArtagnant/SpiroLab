@@ -12,16 +12,16 @@ def main(page: ft.Page):
         "monospace": "./static_data/Monospace.ttf"
     }
 
-    cp = centered_canvas(page)
-    bar = settings_bar(page, cp)
-    # home_page(page) # TODO, fix le passage de la home_page au reste
-    page.add(
-        bar,
-        ft.Container(
-            cp,
-            border_radius=5,
-            width=float("inf"),
-            expand=True,
-        ),
-    )
+    # cp = centered_canvas(page)
+    # bar = settings_bar(page, cp)
+    home_page(page)
+    # page.add(
+    #     bar,
+    #     ft.Container(
+    #         cp,
+    #         border_radius=5,
+    #         width=float("inf"),
+    #         expand=True,
+    #     ),
+    # )
     
