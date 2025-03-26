@@ -1,13 +1,14 @@
 import flet as ft
 from .spirograph import render_spirograph
+
 from audio.getter import input_sound_start, input_sound_end, read_wav, audio_rec, input_path
 from time import sleep
 from random import randint
-from formule import create_svg_for
+from formule import create_svg_for, colors_creator
 from flet.core.protocol import Command
 from formule.normalization import normalize_around
 
-MAX_SPIROS_ON_SCREEN = 5
+MAX_SPIROS_ON_SCREEN = 4
 
 
 def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
@@ -28,8 +29,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
         # TODO : empêcher cette fonction de continuer à s'éxécuter quand on commence à faire autre chose, type afficher un autre spiro
         arrays = read_wav(path)
 
-        large_radii = normalize_around(arrays[0], 100, 70)
-        small_radii = normalize_around(arrays[1], 70, 50)
+        large_radii = normalize_around(arrays[0], 70, 60)
+        small_radii = normalize_around(arrays[1], 60, 50)
         large_frequencies = normalize_around(arrays[2], 45, 40).astype(int) # On s'assure de n'avoir que des entiers dans la liste
         small_frequencies = normalize_around(arrays[3], 35, 30).astype(int)
         resolution = normalize_around(arrays[4], 35, 15) # TODO : vérifier que ces valeurs ne sont pas débiles
@@ -49,13 +50,15 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
             render_spirograph(
                 canvas,
-                (randint(-400, 400), randint(-200, 200)), # Position aléatoire
+                (randint(-500, 500), randint(-200, 200)), # Position aléatoire
 
                 large_radii[i],
                 small_radii[i],
                 int(large_frequencies[i]),
                 int(small_frequencies[i]),
-                resolution[i]
+                resolution[i],
+
+                iter_color = lambda n: colors_creator.smooth_color_generator(["#038AE6", "#86AD2F"], n)
             )
 
             sleep(0.5)

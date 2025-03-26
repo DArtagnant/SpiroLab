@@ -38,14 +38,15 @@ def smooth_color_generator(colors, steps, easing=None):
     rgb_colors = [hex_to_rgb(c) for c in colors]
     n = len(rgb_colors)
     
-    for i in range(n):
+    i = 0
+    while True:
         start = rgb_colors[i]
         end = rgb_colors[(i+1) % n]
         for step in range(steps):
             t = step / steps
             rgb_interp = interpolate_colors(start, end, easing(t))
             yield rgb_to_hex(rgb_interp)
-    yield rgb_to_hex(rgb_colors[0])
+        i  = (i+1)%n
 
 
 def progressive_color_arc_en_ciel(nb_points):
