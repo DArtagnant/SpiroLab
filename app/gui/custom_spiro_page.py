@@ -2,6 +2,7 @@ import flet as ft
 from .centered_canvas import centered_canvas
 from .spirograph import render_spirograph
 from math import pi
+from formule import svg_creator
 
 def custom_spiro_page(page: ft.Page):
     cc = centered_canvas(page)
@@ -26,7 +27,7 @@ def custom_spiro_page(page: ft.Page):
                     small_frequency := ft.Slider(label="{value}", min=5, max=100, value=50),
                     ft.Text("Tourner"),
                     turn := ft.Slider(label="{value}", min=0, max=2*pi, value=0),
-                    ft.ElevatedButton("Exporter", )
+                    export := ft.ElevatedButton("Exporter en svg")
                 ],
                 width=300)
             ],
@@ -53,6 +54,16 @@ def custom_spiro_page(page: ft.Page):
     large_frequency.on_change = recompute_spirograph
     small_frequency.on_change = recompute_spirograph
     turn.on_change = recompute_spirograph
+
+
+    def save_spiro(e: ft.FilePickerResultEvent):
+        if e.path:
+            svg_creator.create_svg_for(tuple(cc.spiros.values())[0], tuple(cc.centers.values())[0], e.path + "/spiro.svg", 20, tuple(cc.rotations.values())[0])
+    
+    save_spiro_dialog = ft.FilePicker(on_result=save_spiro)
+    page.overlay.append(save_spiro_dialog)
+
+    export.on_click = lambda _: save_spiro_dialog.get_directory_path(dialog_title="Choisir un dossier, le fichier sera sauvé sous le nom de spiro.svg")
 
     recompute_spirograph(None)
     return custom_spiro_page_view
