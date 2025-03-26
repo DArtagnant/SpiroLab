@@ -36,10 +36,12 @@ def spirograph(
 
     point1 = None
     point2 = SpiroPoint(None, 0, 0)
+
     if iter_color is None:
         colors = progressive_color_arc_en_ciel(nb_points)
     else:
         colors = iter_color(nb_points)
+
     for _ in range(nb_points):
         point1 = point2
 
@@ -109,8 +111,3 @@ def render_spirograph(
     canvas.clear()
     canvas.draw()
     return spiro_id
-
-def render_spirographs_from_data(cp, data):
-    spiro = tuple(map(lambda x: np.real(x)/50, data[7:13]))
-    print(spiro)
-    render_spirograph(cp, (spiro[0], spiro[1]),*spiro[2:], 50)

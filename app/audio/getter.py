@@ -46,9 +46,6 @@ def read_wav(path):
 
         average = sum(audio_array) / len(audio_array)
 
-        # Shuffle pour éviter la bizarre behaviour du début
-        # TODO++
-        # np.random.shuffle(audio_array)
         # Division du signal en les 5 parties, une pour chaque paramètre
         nb_paquets = len(audio_array)//5
 
