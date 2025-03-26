@@ -16,7 +16,7 @@ LOGO ="""
 """
 
 
-def home_page(page: ft.Page, spiro_should_turn: bool = False):
+def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False) -> ft.View:
 
     logo_text = ft.Text(
         spans=[
@@ -38,7 +38,9 @@ def home_page(page: ft.Page, spiro_should_turn: bool = False):
         ],
     )
 
-    page.add(ft.Row([
+    home_page_view = ft.View(
+        route= "/home",
+        controls=[ft.Row([
                 ft.Stack([
                     canvas_container := ft.Container(
                         canvas := centered_canvas(page),
@@ -62,9 +64,12 @@ def home_page(page: ft.Page, spiro_should_turn: bool = False):
         alignment= ft.MainAxisAlignment.CENTER,
         vertical_alignment=ft.CrossAxisAlignment.CENTER,
         expand=True,
-    ))
+    )]
+    )
 
-    page.floating_action_button = ft.FloatingActionButton(text="Commençons", icon=ft.Icons.ADD, on_click=lambda _: print("TODO"), opacity=0)
+    home_page_view.floating_action_button = ft.FloatingActionButton(text="Commençons", icon=ft.Icons.ADD, on_click=go_to_view_record, opacity=0)
+
+    page.is_on_home_page = True
 
     def animation_color():
         nonlocal paint_color
@@ -77,7 +82,10 @@ def home_page(page: ft.Page, spiro_should_turn: bool = False):
                 del paint_color.colors[-1]
                 paint_color.color_stops.insert(0, val - 1)
                 paint_color.colors.insert(0, colors[(colors.index(paint_color.colors[0]) + 1) % len(colors)])
-            page.update()
+            if page.is_on_home_page:
+                home_page_view.update()
+            else:
+                return
             sleep(0.1)
 
     def animate_title_position():
@@ -92,10 +100,12 @@ def home_page(page: ft.Page, spiro_should_turn: bool = False):
             t = step / n_steps
             bas.height = start_height + ease_in_out_cubic(t) * total_height
             bas.opacity = ease_out_sine(t**3)
-            page.floating_action_button.opacity = ease_in_sine(t)
+            home_page_view.floating_action_button.opacity = ease_in_sine(t)
             text_bienvenue.opacity = start_opacity - min(1, ease_in_sine(t*2))
-            #print(bas.height)
-            page.update()
+            if page.is_on_home_page:
+                home_page_view.update()
+            else:
+                return
             sleep(0.005)
     
     def animate_spiro_background():
@@ -113,6 +123,8 @@ def home_page(page: ft.Page, spiro_should_turn: bool = False):
                 canvas.rotations[s2] += 0.003
                 canvas.draw_once()
                 sleep(0.2)
+                if not page.is_on_home_page:
+                    return
     
     def animate_spiro_show():
         nonlocal canvas_container
@@ -121,11 +133,16 @@ def home_page(page: ft.Page, spiro_should_turn: bool = False):
         for step in range(n_steps):
             t = step / n_steps
             canvas_container.opacity = ease_in_sine(t)
-            page.update()
+            if page.is_on_home_page:
+                home_page_view.update()
+            else:
+                return
             sleep(0.005)
 
     page.run_thread(animation_color)
     page.run_thread(animate_title_position)
     page.run_thread(animate_spiro_background)
     page.run_thread(animate_spiro_show)
+    
+    return home_page_view
 
