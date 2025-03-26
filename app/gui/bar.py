@@ -22,6 +22,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             int(large_frequency.value),
             int(small_frequency.value),
             float(resolution.value),
+
+            iter_color=colors_creator.gen_random_color_scheme()
         )
         page.update()
 
@@ -78,13 +80,15 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     page.overlay.append(audio_rec)
 
     input_button = ft.ElevatedButton(text="Enregistrer", on_click=input_sound_start)
-    # stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: page._Page__conn.send_command(page._session_id, Command(0, 'clean', [canvas.uid], {})))
     stop_input_button = ft.ElevatedButton(text="Stop", on_click=input_sound_end)
 
-    # TODO : Mettre le bon path -> voir le dossier temp dans getter.py ?
     def export_spiro(_):
+        import os
+        app_perm_path = os.getenv("FLET_APP_STORAGE_DATA")
+        file_path = os.path.join(app_perm_path, "out.svg")
+        
         spiro_id = tuple(canvas.spiros.keys())[-1]
-        # create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], "/home/thomas/Programmation/projet-NSI/a.svg", angle=canvas.rotations.get(spiro_id, None))
+        create_svg_for(canvas.spiros[spiro_id], canvas.centers[spiro_id], file_path, angle=canvas.rotations.get(spiro_id, None))
 
     export_button = ft.ElevatedButton(text="Exporter un spirographe", on_click=export_spiro)
 
