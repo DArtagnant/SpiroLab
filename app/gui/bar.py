@@ -66,7 +66,7 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
             current_nb_spiros = (current_nb_spiros + 1)%MAX_SPIROS_ON_SCREEN
         
     large_radius = ft.TextField(label="Rayon du grand cercle", value='125')
-    small_radius = ft.TextField(label="Rayon du petit cercle", value='200')
+    small_radius = ft.TextField(label="Rayon du petit cercle", value='100')
 
     large_frequency = ft.TextField(label="Fréquence du petit cercle", value='75')
     small_frequency = ft.TextField(label="Fréquence du point", value='50')
