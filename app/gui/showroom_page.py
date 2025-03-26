@@ -22,6 +22,8 @@ def compute_spirographs_from_wav(page, canvas, path):
 
     current_nb_spiros = 0
     for i in range(len(large_radii)):
+        if page.current_view_name != "showroom":
+            return
         # Si le spirographe affiché n'est pas suffisemment différent du dernier, on passe
         # Permet de ne jamais avoir deux spirographes presque identiques d'affilée
         if (i != 0 and
@@ -52,7 +54,7 @@ def compute_spirographs_from_wav(page, canvas, path):
        
 
 def showroom_page(page: ft.Page, audio_path) -> ft.View:
-
+    page.current_view_name = "showroom"
     cc = centered_canvas(page)
 
     showroom_page_view = ft.View(

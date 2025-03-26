@@ -1,7 +1,8 @@
 import flet as ft
 from audio.getter import input_sound_start, input_sound_end
 
-def recorder_page(page: ft.Page, switch_to_showroom_page):
+def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro_page):
+    page.current_view_name = "recorder"
     recorder_view = ft.View(
         route="/enregistrer",
         controls= [
@@ -14,6 +15,9 @@ def recorder_page(page: ft.Page, switch_to_showroom_page):
                 alignment=ft.MainAxisAlignment.CENTER,
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
                 ),
+                ft.Text(),
+                ft.Text("Vous pouvez aussi construire votre propre spirographe en ajustant à la main les paramètres :"),
+                custom_spiro := ft.ElevatedButton("Construire un spirographe", on_click=switch_to_custom_spiro_page),
             ],
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,

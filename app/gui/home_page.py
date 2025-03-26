@@ -17,7 +17,7 @@ LOGO ="""
 
 
 def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False) -> ft.View:
-
+    page.current_view_name = "home_page"
     logo_text = ft.Text(
         spans=[
             ft.TextSpan(
@@ -50,7 +50,7 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
                         logo_text,
                         text_bienvenue := ft.Text("Bienvenue dans SpiroLab !", size=18, opacity=1),
                         bas := ft.Container(
-                            ft.Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut \n labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation \n ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in \n reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat \n non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            ft.Text("Une expérience musicale et visuelle\nAdmirez la géométrie des ondes acoustiques.\nFaites danser les courbes et les couleurs sur les fréquences de votre voix ou de vos musiques préférées.",
                                     text_align=ft.TextAlign.CENTER),
                             height=0,
                             opacity=0
@@ -69,7 +69,6 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
 
     home_page_view.floating_action_button = ft.FloatingActionButton(text="Commençons", icon=ft.Icons.ADD, on_click=go_to_view_record, opacity=0)
 
-    page.is_on_home_page = True
 
     def animation_color():
         nonlocal paint_color
@@ -82,7 +81,7 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
                 del paint_color.colors[-1]
                 paint_color.color_stops.insert(0, val - 1)
                 paint_color.colors.insert(0, colors[(colors.index(paint_color.colors[0]) + 1) % len(colors)])
-            if page.is_on_home_page:
+            if page.current_view_name == "home_page":
                 home_page_view.update()
             else:
                 return
@@ -102,7 +101,7 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
             bas.opacity = ease_out_sine(t**3)
             home_page_view.floating_action_button.opacity = ease_in_sine(t)
             text_bienvenue.opacity = start_opacity - min(1, ease_in_sine(t*2))
-            if page.is_on_home_page:
+            if page.current_view_name == "home_page":
                 home_page_view.update()
             else:
                 return
@@ -123,7 +122,7 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
                 canvas.rotations[s2] += 0.003
                 canvas.draw_once()
                 sleep(0.2)
-                if not page.is_on_home_page:
+                if page.current_view_name != "home_page":
                     return
     
     def animate_spiro_show():
@@ -133,7 +132,7 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
         for step in range(n_steps):
             t = step / n_steps
             canvas_container.opacity = ease_in_sine(t)
-            if page.is_on_home_page:
+            if page.current_view_name == "home_page":
                 home_page_view.update()
             else:
                 return
