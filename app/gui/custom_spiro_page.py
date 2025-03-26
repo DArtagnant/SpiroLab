@@ -3,6 +3,7 @@ from .centered_canvas import centered_canvas
 from .spirograph import render_spirograph
 from math import pi
 from formule import svg_creator
+from formule.colors_creator import gen_random_color_scheme
 
 def custom_spiro_page(page: ft.Page):
     cc = centered_canvas(page)
@@ -27,6 +28,8 @@ def custom_spiro_page(page: ft.Page):
                     small_frequency := ft.Slider(label="{value}", min=5, max=100, value=50),
                     ft.Text("Tourner"),
                     turn := ft.Slider(label="{value}", min=0, max=2*pi, value=0),
+                    ft.Text("Couleur"),
+                    color := ft.Slider(label="{value}", min=0, max=10, divisions=10, value=0),
                     export := ft.ElevatedButton("Exporter en svg")
                 ],
                 width=300)
@@ -45,6 +48,7 @@ def custom_spiro_page(page: ft.Page):
             int(large_frequency.value),
             int(small_frequency.value),
             75,
+            iter_color= gen_random_color_scheme(int(color.value))
         )
         cc.rotations[spiro_id] = float(turn.value)
         cc.draw_once()
@@ -54,6 +58,7 @@ def custom_spiro_page(page: ft.Page):
     large_frequency.on_change = recompute_spirograph
     small_frequency.on_change = recompute_spirograph
     turn.on_change = recompute_spirograph
+    color.on_change = recompute_spirograph
 
 
     def save_spiro(e: ft.FilePickerResultEvent):

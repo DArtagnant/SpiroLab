@@ -61,7 +61,7 @@ def progressive_color_arc_en_ciel(nb_points):
 
 
 
-def gen_random_color_scheme():
+def gen_random_color_scheme(i=None):
 
     intervals = [
         None,
@@ -78,7 +78,10 @@ def gen_random_color_scheme():
         ("#772A53", "#E87C5D"), # Dull illustration
     ]
 
-    interval = intervals[randint(0, len(intervals) - 1)]
+    if i is None:
+        interval = intervals[randint(0, len(intervals) - 1)]
+    else:
+        interval = intervals[i % (len(intervals) - 1)]
 
     if interval == None:
         return progressive_color_arc_en_ciel
