@@ -1,7 +1,8 @@
 import flet as ft
 from .spirograph import render_spirograph
 
-from audio.getter import input_sound_start, input_sound_end, read_wav, audio_rec, input_path
+from audio.getter import read_wav, audio_rec, input_path
+from gui.animation import input_animation_handler, stop_input_animation
 from time import sleep
 from random import randint
 from formule import create_svg_for, colors_creator
@@ -13,7 +14,7 @@ MAX_SPIROS_ON_SCREEN = 4
 
 def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
     def recompute_spirograph(_):
-        canvas.shapes = []
+        canvas.remove_all()
         render_spirograph(
             canvas,
             (0,0),
@@ -79,8 +80,8 @@ def settings_bar(page: ft.Page, canvas: ft.canvas.Canvas):
 
     page.overlay.append(audio_rec)
 
-    input_button = ft.ElevatedButton(text="Enregistrer", on_click=input_sound_start)
-    stop_input_button = ft.ElevatedButton(text="Stop", on_click=input_sound_end)
+    input_button = ft.ElevatedButton(text="Enregistrer", on_click=lambda _: input_animation_handler(canvas))
+    stop_input_button = ft.ElevatedButton(text="Stop", on_click=lambda _: stop_input_animation(canvas))
 
     def export_spiro(_):
         import os
