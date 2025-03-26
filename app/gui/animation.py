@@ -7,7 +7,9 @@ done_recording = False
 MAX_TIME_RECORDING = 1000
 
 def input_animation_handler(canvas):
+    from random import randint
     global done_recording
+
     input_sound_start("_")
     n_iter = 0
     while not done_recording and n_iter < MAX_TIME_RECORDING:
@@ -18,8 +20,8 @@ def input_animation_handler(canvas):
                 (-50,0),
                 20,
                 12,
-                9,
-                5,
+                randint(7,15),
+                randint(4,6),
                 50,
                 3,
                 iter_color = formule.colors_creator.gen_random_color_scheme()
@@ -30,8 +32,8 @@ def input_animation_handler(canvas):
                 (50,0),
                 25,
                 9,
-                9,
-                7,
+                randint(9,14),
+                randint(4,8),
                 50,
                 3,
                 iter_color = formule.colors_creator.gen_random_color_scheme()
