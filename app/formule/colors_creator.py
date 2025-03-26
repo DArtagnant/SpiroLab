@@ -1,4 +1,5 @@
 from colorsys import hsv_to_rgb
+from random import randint
 
 def hex_to_rgb(hex_color):
     """Convert a hex color (e.g. "#ACDDDE") to an (R, G, B) tuple."""
@@ -55,3 +56,32 @@ def progressive_color_arc_en_ciel(nb_points):
     while True:
         yield "#{}{}{}".format(*map(lambda n:hex(int(255*n))[2:].zfill(2), hsv_to_rgb(hue, 1, 1)))
         hue = (hue + pas)%1.0
+
+
+
+
+
+def gen_random_color_scheme():
+
+    intervals = [
+        None,
+        ("#957DAD", "#FFDFD3"),
+        ("#8B52CB", "#F7D903"), # Woman in a glass room
+        ("#AA0815", "#3D9BE1"), # Pile of winterwears
+        ("#360258", "#AF1D61"), # Sunset festival
+        ("#FFCE08", "#1259B8"), # Always shining
+        ("#E37324", "#1F1FD1"), # Creative gradient
+        ("#41BBF4", "#EC4087"), # Vivid and spring
+        ("#88d8b0", "#f96e5a"), # Colorful beach
+        ("#f56600", "#e026a3"), # Old Nyc subway colors
+        ("#00ff41", "#003b00"), # Matrix code green
+        ("#772A53", "#E87C5D"), # Dull illustration
+    ]
+
+    interval = intervals[randint(0, len(intervals) - 1)]
+
+    if interval == None:
+        return progressive_color_arc_en_ciel
+
+    else:
+        return lambda nb_points : smooth_color_generator(interval, nb_points)

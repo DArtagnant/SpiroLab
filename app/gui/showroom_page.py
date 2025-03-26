@@ -44,7 +44,7 @@ def compute_spirographs_from_wav(page, canvas, path):
             int(small_frequencies[i]),
             resolution[i],
 
-            iter_color = lambda n: colors_creator.smooth_color_generator(["#038AE6", "#86AD2F"], n)
+            iter_color = colors_creator.gen_random_color_scheme()
         )
 
         sleep(0.5)
