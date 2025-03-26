@@ -108,6 +108,4 @@ def render_spirograph(
         iter_color,
     ):
         spiro_deque.append(line)
-    canvas.clear()
-    canvas.draw()
     return spiro_id
