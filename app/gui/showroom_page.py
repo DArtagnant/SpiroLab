@@ -53,7 +53,7 @@ def compute_spirographs_from_wav(page, canvas, path):
         current_nb_spiros = (current_nb_spiros + 1)%MAX_SPIROS_ON_SCREEN
        
 
-def showroom_page(page: ft.Page, audio_path) -> ft.View:
+def showroom_page(page: ft.Page, audio_path, custom_spiro) -> ft.View:
     page.current_view_name = "showroom"
     cc = centered_canvas(page)
 
@@ -66,6 +66,8 @@ def showroom_page(page: ft.Page, audio_path) -> ft.View:
             )
         ]
     )
+
+    #showroom_page_view.floating_action_button = ft.FloatingActionButton(text="Construire son propre spirograph", icon=ft.Icons.ARROW_RIGHT, on_click=custom_spiro)
 
     page.run_thread(lambda: compute_spirographs_from_wav(page, cc, audio_path))
     return showroom_page_view

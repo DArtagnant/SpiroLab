@@ -5,7 +5,8 @@ from math import pi
 from formule import svg_creator
 from formule.colors_creator import gen_random_color_scheme
 
-def custom_spiro_page(page: ft.Page):
+def custom_spiro_page(page: ft.Page, switch_to_record):
+    page.current_view_name = "custom_spiro"
     cc = centered_canvas(page)
 
     custom_spiro_page_view = ft.View(
@@ -30,7 +31,9 @@ def custom_spiro_page(page: ft.Page):
                     turn := ft.Slider(label="{value}", min=0, max=2*pi, value=0),
                     ft.Text("Couleur"),
                     color := ft.Slider(label="{value}", min=0, max=10, divisions=10, value=0),
-                    export := ft.ElevatedButton("Exporter en svg")
+                    export := ft.ElevatedButton("Exporter en svg"),
+                    ft.Text(""),
+                    ft.ElevatedButton("Retour à l'enregistrement", on_click=switch_to_record),
                 ],
                 width=300)
             ],

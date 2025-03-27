@@ -27,12 +27,12 @@ def main(page: ft.Page):
 
     def switch_to_showroom_page(_, audio_path):
         page.views.clear()
-        page.views.append(showroom_page(page, audio_path))
+        page.views.append(showroom_page(page, audio_path, switch_to_custom_spiro_page))
         page.update()
 
     def switch_to_custom_spiro_page(_):
         page.views.clear()
-        page.views.append(custom_spiro_page(page))
+        page.views.append(custom_spiro_page(page, switch_to_recorder))
         page.update()
 
     # cp = centered_canvas(page)
