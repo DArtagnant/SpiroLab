@@ -92,7 +92,7 @@ def showroom_page(page: ft.Page, audio_path, custom_spiro) -> ft.View:
         ],
     )
 
-    showroom_page_view.floating_action_button = ft.FloatingActionButton(text="Construire son propre spirographe", icon=ft.Icons.ARROW_RIGHT, on_click=custom_spiro)
+    showroom_page_view.floating_action_button = ft.FloatingActionButton(text="Construire son propre spirographe", icon=ft.Icons.BRUSH, on_click=custom_spiro)
     page.run_thread(lambda: compute_spirographs_from_wav(page, [cc1, cc2, cc3], [ccc1, ccc2, ccc3], audio_path))
     return showroom_page_view
 

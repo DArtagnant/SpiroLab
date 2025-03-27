@@ -10,15 +10,15 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
             ft.Column([
                 info := ft.Text("Enregistrez un audio ou choisissez un fichier pour générer les spirographes à partir de celui-ci.\n(Pensez à activer votre microphone)", text_align=ft.TextAlign.CENTER),
                 ft.Row([
-                    input_button := ft.ElevatedButton("Enregistrer"),
-                    file_input := ft.ElevatedButton("Importer un audio .wav"),
+                    input_button := ft.ElevatedButton("Enregistrer", icon=ft.Icons.RADIO_BUTTON_UNCHECKED),
+                    file_input := ft.ElevatedButton("Importer un audio .wav", icon=ft.Icons.UPLOAD_FILE),
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
                 ),
                 ft.Text(),
                 ft.Text("Vous pouvez aussi construire votre propre spirographe en ajustant à la main les paramètres :"),
-                custom_spiro := ft.ElevatedButton("Construire un spirographe", on_click=switch_to_custom_spiro_page),
+                ft.ElevatedButton("Construire un spirographe", on_click=switch_to_custom_spiro_page, icon=ft.Icons.BRUSH),
             ],
             alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -47,6 +47,7 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
         info.value = "Enregistrement en cours."
         input_button.text = "Stop"
         input_button.on_click = on_sound_end
+        input_button.icon = ft.Icons.STOP_CIRCLE
         page.update()
 
     def on_sound_end(_):

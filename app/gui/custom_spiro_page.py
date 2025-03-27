@@ -31,9 +31,9 @@ def custom_spiro_page(page: ft.Page, switch_to_record):
                     turn := ft.Slider(label="{value}", min=0, max=2*pi, value=0),
                     ft.Text("Couleur"),
                     color := ft.Slider(label="{value}", min=0, max=10, divisions=10, value=0),
-                    export := ft.ElevatedButton("Exporter en svg"),
+                    export := ft.ElevatedButton("Exporter en svg", icon= ft.Icons.DOWNLOAD),
                     ft.Text(""),
-                    ft.ElevatedButton("Retour à l'enregistrement", on_click=switch_to_record),
+                    ft.ElevatedButton("Retour à l'enregistrement", on_click=switch_to_record, icon= ft.Icons.ARROW_BACK),
                 ],
                 width=300)
             ],

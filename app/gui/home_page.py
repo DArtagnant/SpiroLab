@@ -67,7 +67,7 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
     )]
     )
 
-    home_page_view.floating_action_button = ft.FloatingActionButton(text="Commençons", icon=ft.Icons.ADD, on_click=go_to_view_record, opacity=0)
+    home_page_view.floating_action_button = ft.FloatingActionButton(text="Commençons", icon=ft.Icons.ARROW_FORWARD, on_click=go_to_view_record, opacity=0)
 
 
     def animation_color():
