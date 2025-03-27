@@ -2,7 +2,6 @@ import flet as ft
 from time import sleep
 
 from .home_page import home_page
-from .bar import settings_bar
 from .centered_canvas import centered_canvas
 from .recorder_page import recorder_page
 from .showroom_page import showroom_page
