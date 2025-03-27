@@ -50,7 +50,7 @@ def custom_spiro_page(page: ft.Page, switch_to_record):
             float(small_radius.value),
             int(large_frequency.value),
             int(small_frequency.value),
-            75,
+            40,
             iter_color= gen_random_color_scheme(int(color.value))
         )
         cc.rotations[spiro_id] = float(turn.value)
