@@ -2,7 +2,7 @@ import numpy as np
 from math import exp
 
 def normalize_around(array, value, excentricity):
-    # Considering the data is centered around 0
+    # Supposant que les données sont centrées autour de zéro
     m = max(abs(array))
 
     # Fonction logistique, décalée pour atteindre des valeurs dans [-excentricity;excentricity]

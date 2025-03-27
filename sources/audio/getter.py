@@ -33,7 +33,7 @@ def read_wav(path):
         else:
             raise ValueError(f"Unsupported sample width: {sample_width}")
 
-        # Numpy array à partir des bytes
+        # Numpy array à partir des octets
         audio_array = np.frombuffer(data, dtype=np_dtype)
 
         if sample_width == 1:
