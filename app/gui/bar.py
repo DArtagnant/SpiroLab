@@ -1,8 +1,7 @@
 import flet as ft
 from .spirograph import render_spirograph
 
-from audio.getter import read_wav, audio_rec, input_path
-from gui.animation import input_animation_handler, stop_input_animation
+from audio.getter import input_sound_start, input_sound_end, read_wav, input_path
 from time import sleep
 from random import randint
 from formule import create_svg_for, colors_creator

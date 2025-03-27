@@ -6,17 +6,14 @@ from flet_audio_recorder import AudioRecorderStateChangeEvent, AudioRecorderStat
 app_temp_path = os.getenv("FLET_APP_STORAGE_TEMP")
 input_path = os.path.join(app_temp_path, "input.wav")
 
-# Enregistement du son
-audio_rec = AudioRecorder(
-    audio_encoder=AudioEncoder.WAV,
-)
-
-def input_sound_start(e):
+def input_sound_start(audio_rec):
     print("Enregistrement commencé")
     audio_rec.start_recording(input_path)
-def input_sound_end(e):
+
+def input_sound_end(audio_rec):
     print("Fin de l'enregistrement")
     audio_rec.stop_recording()
+    return input_path
 
 def read_wav(path):
     data = []
