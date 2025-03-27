@@ -3,5 +3,6 @@ name = "Spiro"
 version = "0.1.1"
 dependencies = [
     "flet_audio_recorder",
-    "numpy"
+    "numpy",
+    "flet"
 ]
