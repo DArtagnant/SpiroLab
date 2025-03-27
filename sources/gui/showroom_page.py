@@ -1,10 +1,10 @@
 import flet as ft
-from .centered_canvas import centered_canvas
+from .components.centered_canvas import centered_canvas
 from audio.getter import read_wav
 from formule.normalization import normalize_around
 from random import randint
 from formule import colors_creator
-from .spirograph import render_spirograph
+from .components.spirograph import render_spirograph
 from time import sleep
 from formule import easing
 

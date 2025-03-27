@@ -15,4 +15,4 @@ if os.getenv("FLET_APP_STORAGE_TEMP") is None:
 
 from gui.render import main
 
-ft.app(target=main, assets_dir="../static_data")
+ft.app(target=main, assets_dir="../data")

@@ -2,7 +2,7 @@ import flet as ft
 from time import sleep
 
 from .home_page import home_page
-from .centered_canvas import centered_canvas
+from .components.centered_canvas import centered_canvas
 from .recorder_page import recorder_page
 from .showroom_page import showroom_page
 from .custom_spiro_page import custom_spiro_page
@@ -11,7 +11,7 @@ def main(page: ft.Page):
     page.title = "SpiroLab"
 
     page.fonts = {
-        "monospace": "../static_data/Monospace.ttf"
+        "monospace": "../data/Monospace.ttf"
     }
 
     def switch_to_recorder(_):
