@@ -42,7 +42,6 @@ def compute_spirographs_from_wav(page, canvases, containers, path):
 
         before = j%len(canvases)    
         now = (j+1)%len(canvases)
-        print((j+1)%len(canvases))
         
         render_spirograph(
             canvases[before],
@@ -59,7 +58,7 @@ def compute_spirographs_from_wav(page, canvases, containers, path):
 
         canvases[before].draw_once()
         
-        n_steps = 500
+        n_steps = 250
         for step in range(n_steps):
             t = step / n_steps
             containers[before].opacity = easing.ease_in_sine(t)
