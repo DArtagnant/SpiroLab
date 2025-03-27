@@ -26,24 +26,15 @@ def main(page: ft.Page):
 
     def switch_to_showroom_page(_, audio_path):
         page.views.clear()
-        page.views.append(showroom_page(page, audio_path, switch_to_custom_spiro_page))
         page.update()
+        showroom_view, audio_launcher = showroom_page(page, audio_path, switch_to_custom_spiro_page)
+        page.views.append(showroom_view)
+        page.update()
+        audio_launcher.play()
 
     def switch_to_custom_spiro_page(_):
         page.views.clear()
         page.views.append(custom_spiro_page(page, switch_to_recorder))
         page.update()
 
-    # cp = centered_canvas(page)
-    # bar = settings_bar(page, cp)
     switch_to_home_page(None)
-    # page.add(
-    #     bar,
-    #     ft.Container(
-    #         cp,
-    #         border_radius=5,
-    #         width=float("inf"),
-    #         expand=True,
-    #     ),
-    # )
-    
