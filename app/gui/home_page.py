@@ -48,10 +48,12 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
                     ),
                     ft.Column([
                         logo_text,
-                        text_bienvenue := ft.Text("Bienvenue dans SpiroLab !", size=18, opacity=1),
+                        text_bienvenue := ft.Text("Bienvenue dans SpiroLab !", size=23, opacity=1),
                         bas := ft.Container(
                             ft.Text("Une expérience musicale et visuelle\nAdmirez la géométrie des ondes acoustiques.\nFaites danser les courbes et les couleurs sur les fréquences de votre voix ou de vos musiques préférées.",
-                                    text_align=ft.TextAlign.CENTER),
+                                    text_align=ft.TextAlign.CENTER,
+                                    size=18,
+                                ),
                             height=0,
                             opacity=0
                         )
@@ -112,8 +114,8 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
         sleep(8)
         colors_pastel1 = ("#ACDDDE", "#CAF1DE", "#E1F8DC")
         colors_pastel2 = ("#FEF8DD", "#FFE7C7", "#F7D8BA")
-        s1 = render_spirograph(canvas, (-100, -100), 200, 75, 10, 50, 10, 2, lambda nb_points: cycle(smooth_color_generator(colors_pastel1, int(nb_points/2), easing=ease_in_out_cubic)))
-        s2 = render_spirograph(canvas, (700, -600), 350, 100, 10, 30, 10, 2, lambda nb_points: cycle(smooth_color_generator(colors_pastel2, int(nb_points/2))))
+        s1 = render_spirograph(canvas, (-200, 0), 150, 200, 30, 66, 10, 2, lambda nb_points: cycle(smooth_color_generator(colors_pastel1, int(nb_points/2), easing=ease_in_out_cubic)))
+        s2 = render_spirograph(canvas, (950, -650), 80, 260, 16, 36, 10, 2, lambda nb_points: cycle(smooth_color_generator(colors_pastel2, int(nb_points/2))))
         if spiro_should_turn:
             canvas.rotations[s1] = 0
             canvas.rotations[s2] = 0
