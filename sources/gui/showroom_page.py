@@ -7,7 +7,6 @@ from formule import colors_creator
 from .spirograph import render_spirograph
 from time import sleep
 from formule import easing
-import flet_audio
 
 MAX_SPIROS_ON_SCREEN = 4
 MARGE = 50
@@ -78,13 +77,7 @@ def showroom_page(page: ft.Page, audio_path, custom_spiro) -> ft.View:
     cc1 = centered_canvas(page)
     cc2 = centered_canvas(page)
     cc3 = centered_canvas(page)
-
-    audio_ctrl = flet_audio.Audio(
-        src=audio_path,
-        autoplay=False,
-    )
-
-    page.overlay.append(audio_ctrl)
+    cc4 = centered_canvas(page)
 
     showroom_page_view = ft.View(
         route= "/dessin",
@@ -93,18 +86,13 @@ def showroom_page(page: ft.Page, audio_path, custom_spiro) -> ft.View:
                 ccc1 := ft.Container(cc1, expand=True),
                 ccc2 := ft.Container(cc2, expand=True),
                 ccc3 := ft.Container(cc3, expand=True),
+                ccc4 := ft.Container(cc4, expand=True),
             ],
             expand=True)
         ],
     )
 
-    def quit_showroom(_):
-        nonlocal audio_ctrl
-        audio_ctrl.pause()
-        audio_ctrl.release()
-        custom_spiro(None)
-
-    showroom_page_view.floating_action_button = ft.FloatingActionButton(text="Construire son propre spirographe", icon=ft.Icons.BRUSH, on_click=quit_showroom)
+    showroom_page_view.floating_action_button = ft.FloatingActionButton(text="Construire son propre spirographe", icon=ft.Icons.BRUSH, on_click=custom_spiro)
     page.run_thread(lambda: compute_spirographs_from_wav(page, [cc1, cc2, cc3], [ccc1, ccc2, ccc3], audio_path))
-    return showroom_page_view, audio_ctrl
+    return showroom_page_view
 

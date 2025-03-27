@@ -1,6 +1,3 @@
-flet==0.27.6
-flet-cli==0.27.6
-flet-desktop==0.27.6
-flet-audio==0.1.0
-flet-audio-recorder==0.1.0
+flet==0.26.0
+flet_audio_recorder==0.1.0
 numpy==1.26.4
