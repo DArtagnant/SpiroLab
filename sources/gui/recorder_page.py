@@ -1,6 +1,7 @@
 import flet as ft
 from audio.getter import input_sound_start, input_sound_end
 from flet_audio_recorder import AudioRecorderStateChangeEvent, AudioRecorderState, AudioRecorder, AudioEncoder
+import os
 
 def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro_page):
     page.current_view_name = "recorder"
@@ -38,7 +39,23 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
 
     def execute_animation_from_audio():
         nonlocal audio_path
-        switch_to_showroom_page(None, audio_path)
+        if audio_path and os.path.exists(audio_path):
+            dialog_before_anim = ft.AlertDialog(
+                modal=True,
+                title=ft.Text("Animation prête"),
+                content=ft.Text("Fichier bien récupéré.\nLancez l'animation lorsque vous serez prêt"),
+                actions_alignment=ft.MainAxisAlignment.END,
+                actions=[
+                    ft.TextButton("Démarrer", on_click=lambda _: switch_to_showroom_page(None, audio_path))
+                ]
+            )
+            page.open(dialog_before_anim)
+        else:
+            audio_path = None
+            dialog = ft.AlertDialog(
+                title=ft.Text("Fichier non-trouvé"),
+            )
+            page.open(dialog)
 
 
     def on_sound_start(_):
@@ -66,7 +83,13 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
     import_audio_dialog = ft.FilePicker(on_result=import_audio)
     page.overlay.append(import_audio_dialog)
 
-    file_input.on_click = lambda _: import_audio_dialog.pick_files(allow_multiple=False, dialog_title="Choisir un fichier audio WAV", allowed_extensions=["wav"], file_type=ft.FilePickerFileType.CUSTOM)
+    file_input.on_click = lambda _: import_audio_dialog.pick_files(
+        allow_multiple=False,
+        dialog_title="Choisir un fichier audio WAV",
+        allowed_extensions=["wav"],
+        file_type=ft.FilePickerFileType.CUSTOM,
+        initial_directory=os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../static_data/la3.wav"), #TODO
+    )
     
     return recorder_view
 
