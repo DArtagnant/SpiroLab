@@ -77,7 +77,6 @@ def showroom_page(page: ft.Page, audio_path, custom_spiro) -> ft.View:
     cc1 = centered_canvas(page)
     cc2 = centered_canvas(page)
     cc3 = centered_canvas(page)
-    cc4 = centered_canvas(page)
 
     showroom_page_view = ft.View(
         route= "/dessin",
@@ -86,7 +85,6 @@ def showroom_page(page: ft.Page, audio_path, custom_spiro) -> ft.View:
                 ccc1 := ft.Container(cc1, expand=True),
                 ccc2 := ft.Container(cc2, expand=True),
                 ccc3 := ft.Container(cc3, expand=True),
-                ccc4 := ft.Container(cc4, expand=True),
             ],
             expand=True)
         ],
