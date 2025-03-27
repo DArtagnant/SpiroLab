@@ -11,7 +11,7 @@ def main(page: ft.Page):
     page.title = "SpiroLab"
 
     page.fonts = {
-        "monospace": "../data/Monospace.ttf"
+        "monospace": "Monospace.ttf"
     }
 
     def switch_to_recorder(_):

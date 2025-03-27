@@ -12,7 +12,6 @@ if os.getenv("FLET_APP_STORAGE_TEMP") is None:
     os.system(f"flet run {main_py_path}")
     sys.exit()
 
-
 from gui.render import main
 
-ft.app(target=main, assets_dir="../data")
+ft.app(target=main, assets_dir="assets")

@@ -1,0 +1,555 @@
+# fmedia v1.28 GUI/GTK
+
+include_language {
+	# <LANG> "gui_lang_<LANG>.txt"
+	default "gui_lang_en.txt"
+	it "gui_lang_it.txt"
+}
+
+menu mfile {
+	item $MFAdd {
+		action A_LIST_ADDFILE
+		hotkey "Insert"
+	}
+	item $MFAddURL {
+		action A_LIST_ADDURL
+		hotkey "Ctrl+U"
+	}
+	item "-" {
+	}
+	item $MFAnalyzeShowPCMInfo {
+		action A_FILE_SHOWPCM
+	}
+	item $MFEditMetaData {
+		action A_FILE_SHOWINFO
+		hotkey "I"
+	}
+	item $MFShowInFileManagerApp {
+		action A_FILE_SHOWDIR
+	}
+	item $MFRename {
+		action A_SHOW_RENAME
+		hotkey "Shift+F6"
+	}
+	item $MFDeleteFromDisk {
+		action A_FILE_DELFILE
+		hotkey "Shift+Delete"
+	}
+	item "-" {
+	}
+	item $MFDownloadfromYouTube {
+		action A_DLOAD_SHOW
+	}
+	item "-" {
+	}
+	item $MFMinimizetoTray {
+		action A_HIDE
+		hotkey "Ctrl+M"
+	}
+	item $MFExit {
+		action A_QUIT
+		hotkey "Ctrl+Q"
+	}
+}
+
+menu mlist {
+	item $MLNewTab {
+		action A_LIST_NEW
+		hotkey "Ctrl+N"
+	}
+	item $MLCloseTab {
+		action A_LIST_DEL
+		hotkey "Ctrl+W"
+	}
+	item $MLSavePlaylist {
+		action A_LIST_SAVE
+		hotkey "Ctrl+S"
+	}
+	item $MLReadMetaTags {
+		action A_LIST_READMETA
+	}
+	item "-" {
+	}
+	item $MLScrollToCurrent {
+		action A_LIST_SHOWCURTRACK
+	}
+	item $MLSelectAll {
+		action A_LIST_SELECTALL
+	}
+	item $MLAddToNextPlaylist {
+		action A_LIST_TO_NEXT
+	}
+	item "-" {
+	}
+	item $MLRemove {
+		action A_LIST_REMOVE
+		hotkey "Delete"
+	}
+	item $MLRemoveDeadItems {
+		action A_LIST_RMDEAD
+	}
+	item $MLClear {
+		action A_LIST_CLEAR
+	}
+	item "-" {
+	}
+	item $MLRandom {
+		action A_LIST_RANDOM
+	}
+	item $MLSortRandom {
+		action A_LIST_SORTRANDOM
+	}
+}
+
+menu mplay {
+	item $MPPlayPause {
+		action A_PLAYPAUSE
+		hotkey "Space"
+	}
+	item $MPStop {
+		action A_STOP
+		hotkey "S"
+	}
+	item $MPStopAfterCurrent {
+		action A_STOP_AFTER
+		hotkey "Shift+S"
+	}
+	item $MPNext {
+		action A_NEXT
+		hotkey "N"
+	}
+	item $MPPrevious {
+		action A_PREV
+		hotkey "P"
+	}
+	item $MPRepeatNoneTrackAll {
+		action A_PLAY_REPEAT
+	}
+	item "-" {
+	}
+	item $MPSeekForward {
+		action A_FFWD
+		hotkey "Alt+Right"
+	}
+	item $MPSeekBack {
+		action A_RWND
+		hotkey "Alt+Left"
+	}
+	item $MPLeapForward {
+		action A_LEAP_FWD
+		hotkey "Ctrl+Right"
+	}
+	item $MPLeapBack {
+		action A_LEAP_BACK
+		hotkey "Ctrl+Left"
+	}
+	item $MPSetMarker {
+		action A_SETGOPOS
+		hotkey "Shift+G"
+	}
+	item $MPJumpToMarker {
+		action A_GOPOS
+		hotkey "G"
+	}
+	item "-" {
+	}
+	item $MPVolumeUp {
+		action A_VOLUP
+		hotkey "Ctrl+Up"
+	}
+	item $MPVolumeDown {
+		action A_VOLDOWN
+		hotkey "Ctrl+Down"
+	}
+	item $MPResetVolume {
+		action A_VOLRESET
+	}
+	item "-" {
+	}
+	item $MPProperties {
+		action A_SHOW_PROPS
+	}
+}
+
+menu mconvert {
+	item $MCConvert {
+		action A_SHOWCONVERT
+		hotkey "Ctrl+T"
+	}
+	item $MCSetSeekPosition {
+		action A_CONV_SET_SEEK
+		hotkey "["
+	}
+	item $MCSetUntilPosition {
+		action A_CONV_SET_UNTIL
+		hotkey "]"
+	}
+}
+
+menu mhelp {
+	item $MHQuickCommand {
+		action A_CMD_SHOW
+		hotkey "Ctrl+`"
+	}
+	item $MHEditDefaultSettings {
+		action A_CONF_EDIT
+	}
+	item $MHEditUserSettings {
+		action A_USRCONF_EDIT
+	}
+	item $MHEditGUI {
+		action A_FMEDGUI_EDIT
+	}
+	item "-" {
+	}
+	item $MHShowReadmeFile {
+		action A_README_SHOW
+	}
+	item $MHShowChangelog {
+		action A_CHANGES_SHOW
+	}
+	item $MHAbout {
+		action A_ABOUT
+	}
+}
+
+menu mexplorer {
+	item $MEAddandPlay {
+		action A_EXPL_ADDPLAY
+	}
+	item $MEAddtoPlaylist {
+		action A_EXPL_ADD
+	}
+}
+
+menu mpopup {
+	item $MFAnalyzeShowPCMInfo {
+		action A_FILE_SHOWPCM
+	}
+	item $MFEditMetaData {
+		action A_FILE_SHOWINFO
+		hotkey "I"
+	}
+	item $MFShowInFileManagerApp {
+		action A_FILE_SHOWDIR
+	}
+	item $MFRename {
+		action A_SHOW_RENAME
+		hotkey "Shift+F6"
+	}
+	item $MFDeleteFromDisk {
+		action A_FILE_DELFILE
+		hotkey "Shift+Delete"
+	}
+	item "-" {
+	}
+	item $MLAddToNextPlaylist {
+		action A_LIST_TO_NEXT
+	}
+	item $MLRemove {
+		action A_LIST_REMOVE
+		hotkey "Delete"
+	}
+}
+
+dialog dlg {
+}
+
+window wmain {
+	title "fmedia"
+	position 0 0 500 400
+	icon {
+		filename "fmedia.ico"
+	}
+
+	mainmenu mm {
+		item $MMFile {
+			submenu mfile
+		}
+		item $MMList {
+			submenu mlist
+		}
+		item $MMPlayback {
+			submenu mplay
+		}
+		item $MMConvert {
+			submenu mconvert
+		}
+		item $MMHelp {
+			submenu mhelp
+		}
+	}
+
+	button bpause {
+		style horizontal
+		action A_PLAYPAUSE
+		icon {
+			filename "play.ico"
+		}
+	}
+
+	button bstop {
+		style horizontal
+		action A_STOP
+		icon {
+			filename "stop.ico"
+		}
+	}
+
+	button bprev {
+		style horizontal
+		action A_PREV
+		icon {
+			filename "prev.ico"
+		}
+	}
+
+	button bnext {
+		style horizontal
+		action A_NEXT
+		icon {
+			filename "next.ico"
+		}
+	}
+
+	label lpos {
+		style horizontal
+	}
+
+	trackbar tvol {
+		style horizontal
+		range 125
+		value 100
+		onscroll A_VOL
+	}
+
+	trackbar tpos {
+		range 0
+		onscroll A_SEEK
+	}
+
+	tab tabs {
+		onchange A_LIST_SEL
+	}
+
+	listview vlist {
+		style grid_lines multi_select
+		dblclick A_PLAY
+
+		column "#" {
+			width 35
+		}
+		column $LCArtist {
+		}
+		column $LCTitle {
+			width 200
+		}
+		column $LCDuration {
+			width 50
+		}
+		column $LCInfo {
+		}
+		column $LCDate {
+		}
+		column $LCAlbum {
+		}
+		column $LCFilename {
+		}
+	}
+	statusbar stbar {
+	}
+	trayicon tray_icon {
+		lclick A_SHOW
+	}
+}
+
+window wconvert {
+	position 300 100 500 500
+	title $WTConvert
+	popupfor wmain
+
+	mainmenu mmconv {
+		item $CMMConvert {
+			action A_CONVERT
+		}
+		item $CMMMoveUntilPositionSeek {
+			action A_CONV_MOVE_UNTIL
+		}
+	}
+
+	label lfn {
+		text "Convert selected files to:"
+	}
+
+	editbox eout {
+		style horizontal
+	}
+
+	button boutbrowse {
+		style horizontal
+		text "..."
+		action A_CONVOUTBROWSE
+	}
+	listview vconfig {
+		style editable grid_lines
+		column Name {
+			width 200
+		}
+		column Value {
+			width 200
+		}
+	}
+}
+
+window wabout {
+	title $WTAboutfmedia
+	popupfor wmain
+
+	label labout {
+	}
+
+	label lurl {
+	}
+}
+
+window wuri {
+	title $WTAddURL
+	position 300 300 400 100
+	popupfor wmain
+
+	editbox turi {
+	}
+
+	button bok {
+		text "OK"
+		action A_URL_ADD
+	}
+}
+
+menu mminfo_addtag {
+	item $IMTAddArtist {
+		action A_INFO_ADD_ARTIST
+	}
+	item $IMTAddTitle {
+		action A_INFO_ADD_TITLE
+	}
+}
+
+window winfo {
+	position 300 100 300 500
+	popupfor wmain
+	mainmenu mminfo {
+		item $IMMAddTag {
+			submenu mminfo_addtag
+		}
+		item $IMMWriteTagstoFile {
+			action A_INFO_WRITE
+		}
+	}
+
+	listview vinfo {
+		style editable
+		column Name {
+		}
+		column Value {
+			width 200
+		}
+	}
+}
+
+window wplayprops {
+	title $WTPlaybackProperties
+	position 300 100 300 500
+	popupfor wmain
+
+	# editbox tfilter {
+	# }
+
+	listview vconfig {
+		style editable grid_lines
+		column Name {
+			width 200
+		}
+		column Value {
+			width 200
+		}
+	}
+}
+
+window wdload {
+	title $WTDownloadfromYouTube
+	position 300 100 300 500
+	label lurl {
+		text "URL:"
+		style horizontal
+	}
+	editbox eurl {
+		style horizontal
+	}
+	button bshowfmt {
+		style horizontal
+		text "Show Available Formats"
+		action A_DLOAD_SHOWFMT
+	}
+	text tlog {
+	}
+
+	label lcmdline {
+		text "Formats:"
+		style horizontal
+	}
+	editbox ecmdline {
+		style horizontal
+		text "<VIDEO>+<AUDIO>"
+	}
+	label lout {
+		text "Out Dir:"
+		style horizontal
+	}
+	editbox eout {
+		style horizontal
+		text ""
+	}
+	button bdl {
+		style horizontal
+		text Download
+		action A_DLOAD_DL
+	}
+}
+
+window wlog {
+	title $WTLogMessages
+	position 300 100 600 200
+	popupfor wmain
+	text tlog {
+	}
+}
+
+window wcmd {
+	title $WTQuickCommand
+	position 300 100 300 500
+	popupfor wmain
+
+	#editbox tfilter {
+	#	onchange A_CMD_FILTER
+	#}
+
+	listview vlist {
+		style grid_lines
+		dblclick A_CMD_EXEC
+		column Name {
+		}
+	}
+}
+
+window wrename {
+	title $WTRenameFile
+	position 300 100 500 300
+	popupfor wmain
+	editbox tname {
+	}
+	button brename {
+		text "Rename"
+		action A_RENAME
+	}
+}
