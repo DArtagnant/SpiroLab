@@ -1,5 +1,6 @@
 import flet as ft
 from audio.getter import input_sound_start, input_sound_end
+from flet_audio_recorder import AudioRecorderStateChangeEvent, AudioRecorderState, AudioRecorder, AudioEncoder
 
 def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro_page):
     page.current_view_name = "recorder"
@@ -28,6 +29,13 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
 
     audio_path = None
 
+    # Enregistement du son
+    audio_rec = AudioRecorder(
+        audio_encoder=AudioEncoder.WAV,
+    )
+
+    page.overlay.append(audio_rec)
+
     def execute_animation_from_audio():
         nonlocal audio_path
         switch_to_showroom_page(None, audio_path)
@@ -35,14 +43,15 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
 
     def on_sound_start(_):
         nonlocal input_button, info
-        input_sound_start(None)
+        input_sound_start(audio_rec)
         info.value = "Enregistrement en cours."
         input_button.text = "Stop"
         input_button.on_click = on_sound_end
+        page.update()
 
     def on_sound_end(_):
         nonlocal input_button, info, audio_path
-        audio_path = input_sound_end(None)
+        audio_path = input_sound_end(audio_rec)
         execute_animation_from_audio()
     
     input_button.on_click = on_sound_start
