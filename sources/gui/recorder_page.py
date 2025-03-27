@@ -9,7 +9,9 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
         route="/enregistrer",
         controls= [
             ft.Column([
-                info := ft.Text("Enregistrez un audio ou choisissez un fichier pour générer les spirographes à partir de celui-ci.\n(Pensez à activer votre microphone)", text_align=ft.TextAlign.CENTER),
+                info := ft.Text("Enregistrez un audio ou choisissez un fichier pour générer les spirographes à partir de celui-ci.\n(Pensez à activer votre microphone)",
+                            text_align=ft.TextAlign.CENTER,
+                            size=18),
                 ft.Row([
                     input_button := ft.ElevatedButton("Enregistrer", icon=ft.Icons.RADIO_BUTTON_UNCHECKED),
                     file_input := ft.ElevatedButton("Importer un audio .wav", icon=ft.Icons.UPLOAD_FILE),
@@ -18,7 +20,8 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
                 ),
                 ft.Text(),
-                ft.Text("Vous pouvez aussi construire votre propre spirographe en ajustant à la main les paramètres :"),
+                ft.Text("Vous pouvez aussi construire votre propre spirographe en ajustant à la main les paramètres :",
+                        size=18),
                 ft.ElevatedButton("Construire un spirographe", on_click=switch_to_custom_spiro_page, icon=ft.Icons.BRUSH),
             ],
             alignment=ft.MainAxisAlignment.CENTER,
@@ -43,7 +46,7 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
             dialog_before_anim = ft.AlertDialog(
                 modal=True,
                 title=ft.Text("Animation prête"),
-                content=ft.Text("Fichier bien récupéré.\nLancez l'animation lorsque vous serez prêt"),
+                content=ft.Text("Votre audio est bien récupéré.\nMettez votre ambiance musicale puis lancez l'animation."),
                 actions_alignment=ft.MainAxisAlignment.END,
                 actions=[
                     ft.TextButton("Démarrer", on_click=lambda _: switch_to_showroom_page(None, audio_path))
