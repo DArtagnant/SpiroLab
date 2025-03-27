@@ -1,1 +1,0 @@
-from .svg_creator import create_svg_for
