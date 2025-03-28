@@ -16,7 +16,7 @@
 
 ## Installation
 
-Le projet a été testé et fonctionne avec `Python 3.12` et `Python 3.13`. Des versions de python plus anciennes ne sont pas forcément compatibles.
+Le projet a été testé et fonctionne avec `Python 3.12`. Des versions de python plus anciennes ne sont pas forcément compatibles.
 
 ### Utilisation sous Windows
 

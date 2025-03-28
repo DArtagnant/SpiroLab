@@ -89,6 +89,7 @@ def home_page(page: ft.Page, go_to_view_record, spiro_should_turn: bool = False)
 
     # Ajout du bouton flottant pour démarrer l'enregistrement
     home_page_view.floating_action_button = ft.FloatingActionButton(text="Commencer", icon=ft.Icons.ARROW_FORWARD, on_click=go_to_view_record, opacity=0)
+    home_page_view.floating_action_button_location = ft.FloatingActionButtonLocation.END_FLOAT
 
     # Fonction pour animer le dégradé du logo
     def animation_color():
