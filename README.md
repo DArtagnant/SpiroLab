@@ -16,46 +16,56 @@
 
 ## Installation
 
-### 1. Installation avec les fichiers compilés
+Le projet a été testé et fonctionne avec `Python 3.13`. Des versions de python plus anciennes ne sont pas forcément compatibles.
 
-Pour faciliter le lancement de l'application, des fichiers compilés pour Windows et Linux sont disponibles dans le répertoire `executable`. Il suffit de lancer l'exécutable approprié pour démarrer l'application.
+### Utilisation sous Windows
 
-**Note :** Pour Linux, il est nécessaire d'installer certaines dépendances, détaillées dans la section **Linux** ci-dessous.
+#### 1. Exécution du fichier compilé
+Dans le répertoire `executable\SpiroLab-windows`, lancez `SpiroLab.exe` pour démarrer l'application.
 
-### 2. Installation depuis les sources
+#### 2. Exécution depuis les sources
 
-Si vous préférez exécuter l'application depuis la source, commencez par installer les dépendances en exécutant la commande suivante :
-
-```bash
+Installez les dépendances avec la commande
+```cmd
 pip install -r requirements.txt
 ```
 
-Ensuite, pour lancer l'application, utilisez les commandes suivantes :
-
-```bash
+Lancez la commande `flet run` depuis le répertoire `sources` :
+```cmd
 cd sources
 flet run
 ```
 
-### 3. Installation spécifique pour Linux
+### Utilisation sous Linux
 
-Quelque soit le mode d'installation choisi, certaines étapes supplémentaires doivent être effectuées sous Linux :
-
-- **Installation de la librairie `zenity`** : Cette librairie est requise pour le bon fonctionnement de l'application. Pour l'installer, exécutez la commande suivante :
+#### Prérequis
+La librairie `zenity` est requise pour le bon fonctionnement de l'application (widget de sélection de fichier). Pour l'installer, exécutez la commande :
 
 ```bash
 sudo apt-get install zenity
 ```
 
-- **Enregistrement audio avec `fmedia`** : Pour enregistrer de l'audio, la bibliothèque `fmedia` est requise. Pour l'inclure, exécutez `export PATH=$PATH:"$(pwd)/executable/fmedia":"$(pwd)/../executable/fmedia":"$(pwd)/../../executable/fmedia"` *depuis la racine du projet*, avant de lancer l'application avec la commande `flet run` ou en exécutant l'exécutable depuis le même terminal.
+#### 1. Exécution du fichier compilé
 
-Les commandes nécessaires pour lancer l'application depuis la source sous Linux sont donc :
-
+Lancer ces commandes depuis la racine du projet:
 ```bash
-# à exécuter depuis la racine
+export PATH=$PATH:"$(pwd)/executable/fmedia":"$(pwd)/../executable/fmedia":"$(pwd)/../../executable/fmedia"
+cd executable/SpiroLab-linux
+./SpiroLab
+```
+
+Remarque : la ligne `export` permet d'activer la capacité à enregistrer de l'audio. Sans cette ligne, l'application fonctionne correctement hormis l'enregistrement d'audio.
+
+### 2. Exécution depuis les sources
+
+Installez les dépendances avec la commande
+```bash
+pip install -r requirements.txt
+```
+
+Lancez la commande `flet run` depuis le répertoire `sources` :
+```bash
 export PATH=$PATH:"$(pwd)/executable/fmedia":"$(pwd)/../executable/fmedia":"$(pwd)/../../executable/fmedia"
 cd sources
 flet run
 ```
-
-**Remarque** : Si la dépendance `fmedia` n'est pas installée, l'application fonctionnera normalement, à l'exception de la fonctionnalité d'enregistrement audio.

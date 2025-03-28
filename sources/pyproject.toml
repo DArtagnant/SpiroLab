@@ -1,8 +1,17 @@
 [project]
-name = "Spiro"
-version = "0.1.1"
+name = "SpiroLab"
+version = "0.2.0"
 dependencies = [
-    "flet_audio_recorder",
-    "numpy",
-    "flet"
+    "flet[all]==0.26.0",
+    "flet_audio_recorder==0.1.0",
+    "numpy==1.26.4",
 ]
+requires-python = ">= 3.13"
+authors = [
+  {name = "Lamiss Elhbishy"},
+  {name = "Thomas Diot"},
+  {name = "Pierre Gallois"},
+  {name = "Jules Charlier"},
+  {name = "Jim Garnier"},
+]
+license = "GPL-3.0-or-later"
