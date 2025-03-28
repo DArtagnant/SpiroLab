@@ -129,7 +129,7 @@ def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro
         dialog_title="Choisir un fichier audio WAV",
         allowed_extensions=["wav"],
         file_type=ft.FilePickerFileType.CUSTOM,
-        initial_directory=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../data")),  # TODO : Vérifier ce chemin
+        initial_directory=os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../data")),
     )
 
     return recorder_view
