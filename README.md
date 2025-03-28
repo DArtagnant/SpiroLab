@@ -12,7 +12,7 @@
 > SpiroLab allie art et informatique en animant des spirographes grâce au son.
 > En modifiant six paramètres, l’application génère des tracés précis et élégants.
 > Elle permet d’importer un fichier .wav ou d’enregistrer un son en direct pour créer une chorégraphie colorée via une interface intuitive.
-> Réalisé par cinq étudiants de NSI en un peu plus de 3 mois, le système offre une expérience interactive et artistique soignée.
+> Réalisé par cinq élèves de 1ère NSI en un peu plus de 3 mois, le système offre une expérience interactive et artistique soignée.
 
 ## Installation
 
@@ -56,7 +56,7 @@ cd executable/SpiroLab-linux
 
 Remarque : la ligne `export` permet d'activer la capacité à enregistrer de l'audio. Sans cette ligne, l'application fonctionne correctement hormis l'enregistrement d'audio.
 
-### 2. Exécution depuis les sources
+#### 2. Exécution depuis les sources
 
 Installez les dépendances avec la commande
 ```bash
