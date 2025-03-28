@@ -56,7 +56,7 @@ cd executable/SpiroLab-linux
 
 Remarque : la ligne `export` permet d'activer la capacité à enregistrer de l'audio. Sans cette ligne, l'application fonctionne correctement hormis l'enregistrement d'audio.
 
-### 2. Exécution depuis les sources
+#### 2. Exécution depuis les sources
 
 Installez les dépendances avec la commande
 ```bash
