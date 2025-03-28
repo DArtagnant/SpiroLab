@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-# Projet : SpiroLab
-# Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
 
 import flet as ft  # Importation du module flet pour créer l'application
 import os
