@@ -69,3 +69,11 @@ export PATH=$PATH:"$(pwd)/executable/fmedia":"$(pwd)/../executable/fmedia":"$(pw
 cd sources
 flet run
 ```
+
+## Licence des exemples audio
+
+Vivaldi - Violin Concerto in F minor - "Winter" - Op. 8, No. 4 - RV 297 - Arranged for Strings by GregorQuendel -- https://freesound.org/s/718662/ -- License: Attribution NonCommercial 4.0
+
+Bach - Invention 8 in F Major, BWV 779 - Arranged for Music Box by GregorQuendel -- https://freesound.org/s/711512/ -- License: Attribution NonCommercial 4.0
+
+Bach - Badinerie - BWV 1067 - Arranged for Flute by GregorQuendel -- https://freesound.org/s/744050/ -- License: Attribution NonCommercial 4.0
