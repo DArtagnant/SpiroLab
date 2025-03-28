@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import flet as ft
 import os
 import sys

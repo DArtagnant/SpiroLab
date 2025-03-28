@@ -1,3 +1,6 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 from math import sin, cos, atan2, pi
 
 def distance(a: tuple[float, float], b: tuple[float, float]) -> float:

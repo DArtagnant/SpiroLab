@@ -1,3 +1,6 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 from math import sin, cos
 
 HEAD = """<?xml version="1.0" standalone="yes"?>

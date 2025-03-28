@@ -1,3 +1,6 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import numpy as np
 from math import exp
 

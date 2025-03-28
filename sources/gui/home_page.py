@@ -1,3 +1,6 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import flet as ft
 from time import sleep
 from .components.centered_canvas import centered_canvas

@@ -1,8 +1,10 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import flet as ft
 from flet import canvas as cv
 from formule.math import distance, calc_point, average_angle
 from formule.colors_creator import progressive_color_arc_en_ciel
-import numpy as np
 from collections import deque
 from math import pi, lcm
 from collections import namedtuple

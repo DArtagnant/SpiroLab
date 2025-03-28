@@ -1,3 +1,6 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import flet as ft
 from .components.centered_canvas import centered_canvas
 from audio.getter import read_wav

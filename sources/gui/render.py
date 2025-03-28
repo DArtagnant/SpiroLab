@@ -1,8 +1,9 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import flet as ft
-from time import sleep
 
 from .home_page import home_page
-from .components.centered_canvas import centered_canvas
 from .recorder_page import recorder_page
 from .showroom_page import showroom_page
 from .custom_spiro_page import custom_spiro_page
@@ -34,16 +35,5 @@ def main(page: ft.Page):
         page.views.append(custom_spiro_page(page, switch_to_recorder))
         page.update()
 
-    # cp = centered_canvas(page)
-    # bar = settings_bar(page, cp)
     switch_to_home_page(None)
-    # page.add(
-    #     bar,
-    #     ft.Container(
-    #         cp,
-    #         border_radius=5,
-    #         width=float("inf"),
-    #         expand=True,
-    #     ),
-    # )
     

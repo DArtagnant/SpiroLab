@@ -1,6 +1,9 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import flet as ft
 from audio.getter import input_sound_start, input_sound_end
-from flet_audio_recorder import AudioRecorderStateChangeEvent, AudioRecorderState, AudioRecorder, AudioEncoder
+from flet_audio_recorder import AudioRecorder, AudioEncoder
 import os
 
 def recorder_page(page: ft.Page, switch_to_showroom_page, switch_to_custom_spiro_page):

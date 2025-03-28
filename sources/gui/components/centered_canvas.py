@@ -1,7 +1,9 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import flet as ft
 from flet import canvas as cv
 from types import MethodType
-from itertools import chain
 from uuid import uuid1 as uuid
 from collections import deque, namedtuple
 from flet.core.protocol import Command

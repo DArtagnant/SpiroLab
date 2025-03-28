@@ -39,7 +39,7 @@ flet run
 
 ### 3. Installation spécifique pour Linux
 
-Quel que soit le mode d'installation choisi, certaines étapes supplémentaires doivent être effectuées sous Linux :
+Quelque soit le mode d'installation choisi, certaines étapes supplémentaires doivent être effectuées sous Linux :
 
 - **Installation de la librairie `zenity`** : Cette librairie est requise pour le bon fonctionnement de l'application. Pour l'installer, exécutez la commande suivante :
 
@@ -47,12 +47,13 @@ Quel que soit le mode d'installation choisi, certaines étapes supplémentaires 
 sudo apt-get install zenity
 ```
 
-- **Enregistrement audio avec `fmedia`** : Pour enregistrer de l'audio, la bibliothèque `fmedia` est requise. Pour l'inclure, exécutez le script `link_fmedia.bash` à la racine du projet, avant de lancer l'application avec la commande flet run ou en exécutant l'exécutable depuis le même terminal.
+- **Enregistrement audio avec `fmedia`** : Pour enregistrer de l'audio, la bibliothèque `fmedia` est requise. Pour l'inclure, exécutez `export PATH=$PATH:"$(pwd)/executable/fmedia":"$(pwd)/../executable/fmedia":"$(pwd)/../../executable/fmedia"` *depuis la racine du projet*, avant de lancer l'application avec la commande `flet run` ou en exécutant l'exécutable depuis le même terminal.
 
 Les commandes nécessaires pour lancer l'application depuis la source sous Linux sont donc :
 
 ```bash
-bash ./link_fmedia.bash
+# à exécuter depuis la racine
+export PATH=$PATH:"$(pwd)/executable/fmedia":"$(pwd)/../executable/fmedia":"$(pwd)/../../executable/fmedia"
 cd sources
 flet run
 ```

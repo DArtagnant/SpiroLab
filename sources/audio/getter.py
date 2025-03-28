@@ -1,7 +1,9 @@
+#Projet : SpiroLab
+#Auteurs : Lamiss Elhbishy, Thomas Diot, Pierre Gallois, Jules Charlier, Jim Garnier
+
 import os
 import wave
 import numpy as np
-from flet_audio_recorder import AudioRecorderStateChangeEvent, AudioRecorderState, AudioRecorder, AudioEncoder
 
 app_temp_path = os.getenv("FLET_APP_STORAGE_TEMP")
 input_path = os.path.join(app_temp_path, "input.wav")
