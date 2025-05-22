@@ -6,7 +6,6 @@
 ███████║██║     ██║██║  ██║╚██████╔╝███████╗██║  ██║██████╔╝
 ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═════╝ 
 ```
-# pigeons are everywhere !!!
 
 
 ## Résumé
@@ -84,6 +83,10 @@ Nous avons choisi d'utiliser Flet au lieu de bibliothèques plus classiques comm
 Le code dans le répertoire `sources` est sous licence GNU GPLv3 et la documentation est sous licence CC BY-SA.
 
 Les fichiers dans `executable` sont sous leurs licences respectives.
+
+### Projet parallèle codé en Rust
+
+https://github.com/DArtagnant/SpiroLab-rs
 
 ### Musiques présentes dans `data`
 
